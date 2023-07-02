@@ -13,16 +13,15 @@ export class LoginComponent {
   constructor(private router: Router) { }
 
   login(): void {
-    // Perform login logic here
-    // You can access the entered username and password using this.username and this.password
-    // Example: Send a request to the backend API to validate the credentials
-    if (this.username == "user"){
-
+    if (this.username === "user" && this.password === "pass") {
+      console.log('Login successful!');
+      // Perform the desired actions for a successful login
+      this.router.navigate(['/user-agreement']); // Redirect to the home page or any other desired route
+    } else {
+      console.log('Invalid username or password!');
+      // Perform the desired actions for an invalid login, such as displaying an error message
     }
-    console.log('Login clicked!');
-    console.log('Username:', this.username);
-    console.log('Password:', this.password);
-    this.router.navigate(['/home']);
   }
+  
 }
 
