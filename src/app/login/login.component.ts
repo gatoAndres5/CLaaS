@@ -16,6 +16,7 @@ export class LoginComponent {
     if (this.username === "user" && this.password === "pass") {
       console.log('Login successful!');
       // Perform the desired actions for a successful login
+      
       this.router.navigate(['/user-agreement']); // Redirect to the home page or any other desired route
     } else {
       console.log('Invalid username or password!');

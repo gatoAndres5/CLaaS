@@ -7,13 +7,16 @@ import { LoginComponent } from './login/login.component';
 import { FormsModule } from '@angular/forms';
 import { HomeComponent } from './home/home.component';
 import { UserAgreementComponent } from './user-agreement/user-agreement.component';
+import { TaskBarComponent } from './task-bar/task-bar.component';
+
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
     HomeComponent,
-    UserAgreementComponent
+    UserAgreementComponent,
+    TaskBarComponent
   ],
   imports: [
     BrowserModule,

@@ -1,0 +1,54 @@
+.top-bar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background-color: #f0f0f0;
+    padding: 10px;
+    height: 80px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .logo-container {
+    display: flex;
+    align-items: center;
+  }
+  .logo {
+    height: 70px; /* Adjust the height of the image */
+    width: auto; /* Maintain the aspect ratio */
+    margin-right: 10px; /* Add some margin on the right for spacing */
+  }
+  
+  .logged-in-as {
+    margin-left: auto; /* Push the text to the right by using auto margin on the left */
+    font-weight: bold;
+    font-size: 17px;
+    font-weight: normal;
+    font-family: Proxima Nova, sans-serif;
+    color: #616161;
+}
+  
+  .logged-in-as span {
+    font-weight: bold;
+    font-size: 17px;
+    font-weight: normal;
+    font-family: Proxima Nova, sans-serif;
+    color: #616161;
+    /* Add additional styling for the text if desired */
+  }
+  .buttons-container {
+    display: flex;
+    align-items: center;
+    margin-right: 50px;
+  }
+  
+  .transparent-button {
+    background-color: transparent;
+    border: none;
+    font-size: 17px;
+    font-family: Proxima Nova, sans-serif;
+    color: #616161;
+    margin-left: 25px;
+    cursor: pointer;
+  }
