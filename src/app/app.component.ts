@@ -8,8 +8,11 @@ import { Router, NavigationEnd } from '@angular/router';
 })
 export class AppComponent implements OnInit {
   isLoginPage: boolean = true;
+  
   title = 'CLaaS';
-  constructor(private router: Router) {}
+  constructor(private router: Router) {
+    
+  }
 
   ngOnInit() {
     // Subscribe to router events to track the current path

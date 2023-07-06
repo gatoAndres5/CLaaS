@@ -1,0 +1,40 @@
+.page-container {
+    margin-top: 110px; /* Adjust the margin value to move the content down */
+  }
+  
+  .centered-heading {
+    text-align: center; /* Center the text */
+    font-family: Proxima Nova, sans-serif;
+    font-size: 40px;
+    font-weight: bold;
+    color: #AB0520;
+  }
+  
+  .middle-section {
+    /* Add any additional styling for the middle section */
+    text-align: left;
+    margin-left: 20px;
+    font-family: Proxima Nova, sans-serif; /* Specify the desired font family */
+    font-size: 20px; /* Specify the desired font size */
+    font-weight: normal; /* Specify the desired font weight */
+    color: #686464;
+    margin-bottom: 50px;
+  }
+  .left-heading {
+    text-align: left;
+    margin-left: 0px; /* Add desired margin to create space from the left */
+    font-family: Proxima Nova, sans-serif; /* Specify the desired font family */
+    font-size: 30px; /* Specify the desired font size */
+    font-weight: normal; /* Specify the desired font weight */
+    color: #363636;
+  }
+  .left-heading2 {
+    text-align: left;
+    margin-left: 20px; /* Add desired margin to create space from the left */
+    font-family: Proxima Nova, sans-serif; /* Specify the desired font family */
+    font-size: 30px; /* Specify the desired font size */
+    font-weight: normal; /* Specify the desired font weight */
+    color: #363636;
+    margin-bottom: 50px;
+  }
+  
