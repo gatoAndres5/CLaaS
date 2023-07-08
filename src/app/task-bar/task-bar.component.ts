@@ -22,4 +22,11 @@ export class TaskBarComponent implements OnInit {
     this.userRole = this.userRoleService.userRole;
     this.showTaskBar = this.router.url !== '/login';
   }
+  logout(): void {
+    // Perform any necessary actions to log out the user
+    // For example, clearing session storage, resetting user data, etc.
+    this.userRoleService.userRole = '';
+    this.router.navigate(['/login']); // Redirect to the login screen
+  }
+  
 }

@@ -7,12 +7,21 @@
       </div>
     </div>
     <div class="buttons-container">
-      <button class="transparent-button">Home</button>
+      <button class="transparent-button" [routerLink]= "['/home']">Home</button>
+      <ng-container *ngIf="userRole === 'Administrator'">
+        <div class="dropdown">
+          <button class="dropdown-button">Administrator˅</button>
+          <div class="dropdown-content">
+            <a href="#">Configuration</a>
+            <a href="#" >Modify Experiment Slides</a>
+          </div>
+        </div>
+      </ng-container>
       <div class="dropdown">
         <button class="dropdown-button">Account˅</button>
         <div class="dropdown-content">
           <a href="#">Change Password</a>
-          <a href="#">Log out</a>
+          <a href="#" (click)="logout()">Log out</a>
         </div>
       </div>
       <button class="transparent-button">Help</button>

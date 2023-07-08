@@ -14,7 +14,7 @@ export class LoginComponent {
   constructor(private router: Router,private userRoleService: UserRoleService) { }
 
   login(): void {
-    if (this.username === "u" && this.password === "p") {
+    if (this.username === "s" && this.password === "p") {
       console.log('Student login successful!');
       // Perform the desired actions for a successful student login
       this.userRoleService.userRole = "Student";
