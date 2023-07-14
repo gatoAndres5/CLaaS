@@ -28,5 +28,22 @@ export class TaskBarComponent implements OnInit {
     this.userRoleService.userRole = '';
     this.router.navigate(['/login']); // Redirect to the login screen
   }
-  
+  configure(): void{
+    this.router.navigate(['/configuration']);
+  }
+  viewUsers(): void{
+    this.router.navigate(['/configuration']);
+  }
+  viewSlides(): void{
+    this.router.navigate(['/viewSlides']);
+  }
+  experimentUsers(): void{
+    this.router.navigate(['/configuration']);
+  }
+  viewLogs(): void{
+    this.router.navigate(['/configuration']);
+  }
+  phpInfo(): void{
+    this.router.navigate(['/configuration']);
+  }
 }

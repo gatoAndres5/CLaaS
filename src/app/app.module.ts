@@ -8,6 +8,8 @@ import { FormsModule } from '@angular/forms';
 import { HomeComponent } from './home/home.component';
 import { UserAgreementComponent } from './user-agreement/user-agreement.component';
 import { TaskBarComponent } from './task-bar/task-bar.component';
+import { ConfigurationComponent } from './configuration/configuration.component';
+import { ExperimentSlidesComponent } from './experiment-slides/experiment-slides.component';
 
 
 @NgModule({
@@ -16,7 +18,9 @@ import { TaskBarComponent } from './task-bar/task-bar.component';
     LoginComponent,
     HomeComponent,
     UserAgreementComponent,
-    TaskBarComponent
+    TaskBarComponent,
+    ConfigurationComponent,
+    ExperimentSlidesComponent
   ],
   imports: [
     BrowserModule,
