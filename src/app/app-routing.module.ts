@@ -5,6 +5,7 @@ import { HomeComponent } from './home/home.component';
 import { UserAgreementComponent } from './user-agreement/user-agreement.component';
 import { ConfigurationComponent } from './configuration/configuration.component';
 import { ExperimentSlidesComponent } from './experiment-slides/experiment-slides.component';
+import { UserPageComponent } from './user-page/user-page.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/login', pathMatch: 'full' },
@@ -13,6 +14,7 @@ const routes: Routes = [
   { path: 'user-agreement', component: UserAgreementComponent},
   { path: 'configuration', component: ConfigurationComponent},
   {path: 'viewSlides',component:ExperimentSlidesComponent},
+  {path:'viewUsers',component:UserPageComponent},
   // Other routes for your application
 ];
 

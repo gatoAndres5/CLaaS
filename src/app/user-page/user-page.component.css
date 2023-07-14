@@ -1,0 +1,62 @@
+.page-title {
+    margin-top: 100px;
+    margin-bottom: 30px;
+    margin-left: 10px;
+    font-size: 40px;
+    font-weight: normal;
+    font-family: Proxima Nova, sans-serif;
+    color: #AB0520;
+  }
+  button[type="submit"] {
+    background-color: #AB0520;
+    color: white;
+    font-family: Proxima Nova, sans-serif;
+    font-size: 15px;
+    font-weight: normal;
+    align-self: flex-start; /* Align the button to the left */
+    padding:12px 20px;
+    margin-bottom: 30px;
+    margin-top: 30px;
+    margin-left: 10px;
+  }
+  .content-title{
+    margin-top: 30px;
+      margin-bottom: 30px;
+      margin-left: 10px;
+      font-size: 30px;
+      font-weight: normal;
+      font-family: Proxima Nova, sans-serif;
+      color: #363636;
+  }
+  .smallcontent-title{
+    margin-top: 30px;
+      margin-bottom: 30px;
+      margin-left: 10px;
+      font-size: 16px;
+      font-weight: normal;
+      font-family: Proxima Nova, sans-serif;
+      color: #363636;
+  }
+  .file-upload-container {
+    margin-top: 10px;
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    flex-direction: column;
+  }
+  
+  .file-upload-container label {
+    margin-bottom: 5px;
+    margin-left: 10px;
+    text-align: left;
+    font-size: 16px;
+    font-weight: normal;
+    font-family: Proxima Nova, sans-serif;
+    color: #363636;
+  }
+  
+  .file-upload-container input[type="file"] {
+    width: 300px; /* Adjust the width as desired */
+    margin-left: 10px;
+    align-self: flex-start;
+  }

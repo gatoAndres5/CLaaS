@@ -10,6 +10,7 @@ import { UserAgreementComponent } from './user-agreement/user-agreement.componen
 import { TaskBarComponent } from './task-bar/task-bar.component';
 import { ConfigurationComponent } from './configuration/configuration.component';
 import { ExperimentSlidesComponent } from './experiment-slides/experiment-slides.component';
+import { UserPageComponent } from './user-page/user-page.component';
 
 
 @NgModule({
@@ -20,7 +21,8 @@ import { ExperimentSlidesComponent } from './experiment-slides/experiment-slides
     UserAgreementComponent,
     TaskBarComponent,
     ConfigurationComponent,
-    ExperimentSlidesComponent
+    ExperimentSlidesComponent,
+    UserPageComponent
   ],
   imports: [
     BrowserModule,
