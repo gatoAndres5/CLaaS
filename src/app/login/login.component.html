@@ -1,11 +1,16 @@
 <div class="content-container">
-    <h2 class="centered-heading">Cybersecurity Lab as a Service (CLaaS)</h2>
-    <div class="image-container">
-      <img src="assets/SFWE.png" alt="SFWE">
-    </div>
+  <h2 class="centered-heading">Cybersecurity Lab as a Service (CLaaS)</h2>
+  <div class="image-container">
+    <img src="assets/SFWE.png" alt="SFWE">
+  </div>
 </div>
-     
+
+
+
 <div class="login-container">
+  <div class="logout-message" *ngIf= "isLoggedOut">
+    <p class="green-text">You have logged out.</p>
+  </div>
   <form (ngSubmit)="login()" #loginForm="ngForm">
     <div class="form-group">
       <label for="username">Username</label>
@@ -19,6 +24,7 @@
     <button type="submit" [disabled]="!loginForm.valid">Sign In</button>
   </form>
 </div>
+
 
 
   

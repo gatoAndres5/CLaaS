@@ -1,6 +1,7 @@
 import { Router } from '@angular/router';
 import { Component } from '@angular/core';
 import { UserRoleService } from '../user-role.service';
+import { LogoutService } from '../logout.service';
 
 
 @Component({
@@ -11,8 +12,15 @@ import { UserRoleService } from '../user-role.service';
 export class LoginComponent {
   username: string = '';
   password: string = '';
-  constructor(private router: Router,private userRoleService: UserRoleService) { }
+  isLoggedOut: boolean = false;
+  constructor(private router: Router,private userRoleService: UserRoleService,private logoutService: LogoutService) { }
 
+  ngOnInit(): void {
+    this.logoutService.logoutStatus$.subscribe((loggedOut: boolean) => {
+      this.isLoggedOut = loggedOut;
+    });
+  }
+  
   login(): void {
     if (this.username === "s" && this.password === "p") {
       console.log('Student login successful!');

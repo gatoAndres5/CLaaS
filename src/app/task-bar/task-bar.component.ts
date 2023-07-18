@@ -1,6 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { UserRoleService } from '../user-role.service';
+import { LogoutService } from '../logout.service';
 
 
 
@@ -15,7 +16,7 @@ export class TaskBarComponent implements OnInit {
   userRole: string = '';
   
 
-  constructor(private router: Router,private userRoleService: UserRoleService) { }
+  constructor(private router: Router,private userRoleService: UserRoleService,private logoutService:LogoutService) { }
 
   ngOnInit(): void {
     // Check the current route
@@ -26,7 +27,9 @@ export class TaskBarComponent implements OnInit {
     // Perform any necessary actions to log out the user
     // For example, clearing session storage, resetting user data, etc.
     this.userRoleService.userRole = '';
+    this.logoutService.setLogoutStatus(true);
     this.router.navigate(['/login']); // Redirect to the login screen
+    
   }
   configure(): void{
     this.router.navigate(['/configuration']);
