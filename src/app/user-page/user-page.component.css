@@ -7,6 +7,18 @@
     font-family: Proxima Nova, sans-serif;
     color: #AB0520;
   }
+  button[type="button"] {
+    background-color: #AB0520;
+    color: white;
+    font-family: Proxima Nova, sans-serif;
+    font-size: 15px;
+    font-weight: normal;
+    align-self: flex-start; /* Align the button to the left */
+    padding:12px 20px;
+    margin-bottom: 30px;
+    margin-top: 30px;
+    margin-left: 10px;
+  }
   button[type="submit"] {
     background-color: #AB0520;
     color: white;
@@ -19,6 +31,43 @@
     margin-top: 30px;
     margin-left: 10px;
   }
+  .input-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 50px;
+  }
+  .form-group {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    margin-bottom: 25px; /* Adjust the spacing between the form groups */
+  }
+  label {
+    margin-bottom: 5px; /* Adjust the spacing between the label and input fields */
+  }
+  .form-group label {
+    font-family: Proxima Nova, sans-serif; /* Specify the desired font family */
+    font-size: 15px; /* Specify the desired font size */
+    font-weight: bold; /* Specify the desired font weight */
+    color: #686464; /* Specify the desired text color */
+    margin-top: 15px;
+  }
+  input[type="text"],input[type="text2"],
+input[type="password"] {
+  width: 900px; /* Adjust the width as desired */
+  height: 35px;
+}
+.experiment-dropdown select {
+  margin-right: 25px;
+  font-size: 18px;
+  font-weight: normal;
+  font-family: Proxima Nova, sans-serif;
+  color: #363636;
+  padding:8px 25px;
+  width: 900px;
+
+}
   .content-title{
     margin-top: 30px;
       margin-bottom: 30px;

@@ -66,6 +66,7 @@
     font-size: 15px; /* Specify the desired font size */
     font-weight: bold; /* Specify the desired font weight */
     color: #686464; /* Specify the desired text color */
+    
   }
   input[type="text"],
 input[type="password"] {
