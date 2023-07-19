@@ -55,20 +55,63 @@
 <h2 class="content-title">Add VM Images to Experiments</h2>
         <hr class="divider"> 
         <div class="add-content">
-            <form (ngSubmit)="login()" #loginForm="ngForm">
-                <div class="form-group">
-                  <label for="username">AWS Vpc Id</label>
-                  <input type="text" id="username" name="username" [(ngModel)]="username" required class="input-long">
-                </div>
-                <div class="form-group">
-                  <label for="password">CIDR Block</label>
-                  <input type="password" id="password" name="password" [(ngModel)]="password" required class="input-long">
-                </div>
-                <div class="form-group">
-                    <label for="password">Security Group</label>
-                    <input type="password" id="password" name="password" [(ngModel)]="password" required class="input-long">
-                  </div>
-                
-                <button type="submit" [disabled]="!loginForm.valid">Save Vpc</button>
-              </form>
+          <div class="centered-section">
+            <div class="experiment-dropdown">
+              <label for="experiment-select" class="sr-only">Experiment</label>
+              <select id="experiment-select">
+                <option value="experiment1">Experiment 1</option>
+                <option value="experiment2">Experiment 2</option>
+                <option value="experiment3">Experiment 3</option>
+              </select>
             </div>
+            </div>
+            <div class="add-content">
+              <div class="centered-section">
+                <div class="experiment-dropdown">
+                  <label for="experiment-select" class="sr-only">VM Image</label>
+                  <select id="experiment-select">
+                    <option value="experiment1">Experiment 1</option>
+                    <option value="experiment2">Experiment 2</option>
+                    <option value="experiment3">Experiment 3</option>
+                  </select>
+                </div>
+                </div>
+            </div>
+        </div>
+<h2 class="content-title">Add VPCs to Experiments</h2>
+  <hr class="divider"> 
+    <div class="add-content">
+      <div class="centered-section">
+          <div class="experiment-dropdown">
+            <label for="experiment-select" class="sr-only">Experiment</label>
+              <select id="experiment-select">
+                <option value="experiment1">Experiment 1</option>
+                <option value="experiment2">Experiment 2</option>
+                <option value="experiment3">Experiment 3</option>
+              </select>
+          </div>
+      </div>
+    </div>
+    <div class="add-content">
+        <div class="centered-section">
+          <div class="experiment-dropdown">
+            <label for="experiment-select" class="sr-only">VPCs</label>
+              <select id="experiment-select">
+                <option value="experiment1">Experiment 1</option>
+                <option value="experiment2">Experiment 2</option>
+                <option value="experiment3">Experiment 3</option>
+              </select>
+          </div>
+        </div>
+    </div>
+<h2 class="content-title">Experiments</h2>
+    <hr class="divider"> 
+
+<h2 class="content-title">VM Images</h2>
+    <hr class="divider"> 
+
+<h2 class="content-title">VPCs</h2>
+    <hr class="divider"> 
+
+<h2 class="content-title">VM Images to Experiments Dependencies</h2>
+    <hr class="divider"> 
