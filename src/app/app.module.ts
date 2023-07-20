@@ -13,6 +13,8 @@ import { ExperimentSlidesComponent } from './experiment-slides/experiment-slides
 import { UserPageComponent } from './user-page/user-page.component';
 
 
+
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -22,7 +24,8 @@ import { UserPageComponent } from './user-page/user-page.component';
     TaskBarComponent,
     ConfigurationComponent,
     ExperimentSlidesComponent,
-    UserPageComponent
+    UserPageComponent,
+    ExperimentSlidesComponent,
   ],
   imports: [
     BrowserModule,

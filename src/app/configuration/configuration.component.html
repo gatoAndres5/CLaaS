@@ -3,17 +3,16 @@
 <h2 class="content-title">Add Experiment</h2>
 <hr class="divider"> 
 <div class="add-content">
-<form (ngSubmit)="login()" #loginForm="ngForm">
+  <form (ngSubmit)="saveExperiment()" #experimentForm="ngForm">
     <div class="form-group">
-      <label for="username">Experiment Name</label>
-      <input type="text" id="username" name="username" [(ngModel)]="username" required class="input-long">
+      <label for="experimentName">Experiment Name</label>
+      <input type="text" id="experimentName" name="experimentName" [(ngModel)]="experimentName" required class="input-long">
     </div>
     <div class="form-group">
-      <label for="password">Experiment Description</label>
-      <input type="password" id="password" name="password" [(ngModel)]="password" required class="input-long">
+      <label for="experimentDescription">Experiment Description</label>
+      <input type="text" id="experimentDescription" name="experimentDescription" [(ngModel)]="experimentDescription" required class="input-long">
     </div>
-    
-    <button type="submit" [disabled]="!loginForm.valid">Save Experiment</button>
+    <button type="submit" [disabled]="!experimentForm.valid">Save Experiment</button>
   </form>
 </div>
 <h2 class="content-title">Add VM Image</h2>
@@ -104,8 +103,31 @@
           </div>
         </div>
     </div>
-<h2 class="content-title">Experiments</h2>
-    <hr class="divider"> 
+
+    <div *ngIf="experiments.length > -1">
+      <h2 class="content-title">Experiments</h2>
+      <hr class="divider">
+      <div class="experiment-header">
+        <span>Experiment Name</span>
+        <span>Experiment Description</span>
+        <span>Enabled</span>
+        <span>Added On</span>
+        <span>Last Mod.</span>
+        <span>Delete</span>
+        <span>Set Users</span>
+      </div>
+      <div *ngFor="let experiment of experiments" class="experiment-item">
+        <span>{{ experiment.name }}</span>
+        <span>{{ experiment.description }}</span>
+        <span>{{ experiment.enabled }}</span>
+        <span>{{ experiment.addedOn }}</span>
+        <span>{{ experiment.lastModified }}</span>
+        <span><button (click)="deleteExperiment(experiment.id)">Delete</button></span>
+        <span><button (click)="setUsers(experiment.id)">Set Users</button></span>
+        <hr class="divider">
+      </div>
+    </div>
+    
 
 <h2 class="content-title">VM Images</h2>
     <hr class="divider"> 

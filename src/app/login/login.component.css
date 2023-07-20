@@ -31,14 +31,15 @@
     max-width: 100%; /* Ensure the image doesn't exceed the container's width */
   }
   .logout-message {
-    background-color: #4caf50;
-    padding: 10px;
+    background-color: #bff3c1;
+    padding: 4px;
     text-align: center;
-    
+    font-family: Proxima Nova, sans-serif;
+    margin-bottom: 15px;
   }
   
   .green-text {
-    color: #ffffff;
+    color: #167a1e;
     font-family: Proxima Nova, sans-serif;
     font-size: 16px;
     width: 900px;
