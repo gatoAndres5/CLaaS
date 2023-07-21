@@ -12,8 +12,10 @@
       <label for="experimentDescription">Experiment Description</label>
       <input type="text" id="experimentDescription" name="experimentDescription" [(ngModel)]="experimentDescription" required class="input-long">
     </div>
-    <button type="submit" [disabled]="!experimentForm.valid">Save Experiment</button>
+    <button type="submit" [disabled]="isSavingExperiment || !experimentForm.valid">Save Experiment</button>
   </form>
+  
+  
 </div>
 <h2 class="content-title">Add VM Image</h2>
 <hr class="divider"> 
@@ -75,6 +77,7 @@
                   </select>
                 </div>
                 </div>
+                <button type="submit" [disabled]="!loginForm.valid">Add Dependency</button>
             </div>
         </div>
 <h2 class="content-title">Add VPCs to Experiments</h2>
@@ -90,7 +93,7 @@
               </select>
           </div>
       </div>
-    </div>
+    
     <div class="add-content">
         <div class="centered-section">
           <div class="experiment-dropdown">
@@ -101,7 +104,10 @@
                 <option value="experiment3">Experiment 3</option>
               </select>
           </div>
+          
         </div>
+        <button type="submit" [disabled]="!loginForm.valid">Add Dependency</button>
+    </div>
     </div>
 
     <div *ngIf="experiments.length > -1">
@@ -116,16 +122,21 @@
         <span>Delete</span>
         <span>Set Users</span>
       </div>
+      <hr class="divider">
       <div *ngFor="let experiment of experiments" class="experiment-item">
-        <span>{{ experiment.name }}</span>
-        <span>{{ experiment.description }}</span>
-        <span>{{ experiment.enabled }}</span>
-        <span>{{ experiment.addedOn }}</span>
-        <span>{{ experiment.lastModified }}</span>
-        <span><button (click)="deleteExperiment(experiment.id)">Delete</button></span>
-        <span><button (click)="setUsers(experiment.id)">Set Users</button></span>
-        <hr class="divider">
+        <div class="experiment-details">
+          <span>{{ experiment.name }}</span>
+          <span>{{ experiment.description }}</span>
+          <span>{{ experiment.enabled }}</span>
+          <span>{{ experiment.addedOn }}</span>
+          <span>{{ experiment.lastModified }}</span>
+          <span><button type="submit" (click)="deleteExperiment(experiment.id)">Delete</button></span>
+          <span><button type="submit" (click)="setUsers(experiment.id)">Set Users</button></span>
+        </div>
+        <hr class="divider"> <!-- Add the <hr> tag here, it will be horizontal -->
       </div>
+      
+      
     </div>
     
 
