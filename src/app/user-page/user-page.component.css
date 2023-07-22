@@ -31,6 +31,18 @@
     margin-top: 30px;
     margin-left: 10px;
   }
+  button[type="submitLeft"] {
+    background-color: #AB0520;
+    color: white;
+    font-family: Proxima Nova, sans-serif;
+    font-size: 15px;
+    font-weight: normal;
+    padding:12px 20px;
+    margin-bottom: 30px;
+    margin-top: 30px;
+    margin-left: auto;
+    
+  }
   .input-container {
     display: flex;
     flex-direction: column;
@@ -103,6 +115,19 @@ input[type="password"] {
     font-family: Proxima Nova, sans-serif;
     color: #363636;
   }
+  .experiment-checkbox-list {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .experiment-checkbox-item {
+    margin-bottom: 5px;
+  }
+  
+  .experiment-checkbox-item label {
+    margin-left: 5px;
+  }
+  
   
   .file-upload-container input[type="file"] {
     width: 300px; /* Adjust the width as desired */

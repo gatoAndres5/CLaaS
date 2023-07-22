@@ -29,8 +29,19 @@
         <option value="experiment3">Administrator</option>
       </select>
     </div>
-    <label for="username">Choose the experiments this user shall have access to</label>
-    <hr class="divider">
+    <label for="experiments">Choose the experiments this user shall have access to</label>
+<div class="experiment-checkbox-list">
+  <div *ngFor="let experiment of userExperiments" class="experiment-checkbox-item">
+    <input type="checkbox" [value]="experiment.id" [(ngModel)]="experiment.selected">
+    <label>{{ experiment.name }}</label>
+  </div>
+</div>
+<button type="submitLeft">Add User</button>
+
+
+
+
+   
     
   </div>
   <hr class="divider">
