@@ -5,13 +5,14 @@
     <div class="centered-section">
         <div class="experiment-dropdown">
           <label for="experiment-select" class="sr-only">Experiment</label>
-          <select id="experiment-select">
-            <option value="experiment1">Experiment 1</option>
-            <option value="experiment2">Experiment 2</option>
-            <option value="experiment3">Experiment 3</option>
+          <select id="experiment-select" [(ngModel)]="selectedExperimentId">
+                    
+            <option *ngFor="let experiment of experiments" [value]="experiment.id">
+              {{ experiment.name }}
+            </option>
           </select>
         </div>
-      </div>
+      
       
       
   
@@ -22,7 +23,10 @@
           <!-- Additional elements for handling the uploaded file -->
         </div>
       </div>
+      <button type="submit" >Upload</button>
     </div>
+    
+  </div>
       
   
   

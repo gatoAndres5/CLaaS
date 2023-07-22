@@ -59,10 +59,11 @@
           <div class="centered-section">
             <div class="experiment-dropdown">
               <label for="experiment-select" class="sr-only">Experiment</label>
-              <select id="experiment-select">
-                <option value="experiment1">Experiment 1</option>
-                <option value="experiment2">Experiment 2</option>
-                <option value="experiment3">Experiment 3</option>
+              <select id="experiment-select" [(ngModel)]="selectedExperimentId">
+                    
+                <option *ngFor="let experiment of experiments" [value]="experiment.id">
+                  {{ experiment.name }}
+                </option>
               </select>
             </div>
             </div>
@@ -70,11 +71,13 @@
               <div class="centered-section">
                 <div class="experiment-dropdown">
                   <label for="experiment-select" class="sr-only">VM Image</label>
-                  <select id="experiment-select">
-                    <option value="experiment1">Experiment 1</option>
-                    <option value="experiment2">Experiment 2</option>
-                    <option value="experiment3">Experiment 3</option>
+                  <select id="experiment-select" [(ngModel)]="selectedExperimentId">
+                    
+                    <option *ngFor="let experiment of experiments" [value]="experiment.id">
+                      {{ experiment.name }}
+                    </option>
                   </select>
+                  
                 </div>
                 </div>
                 <button type="submit" [disabled]="!loginForm.valid">Add Dependency</button>
@@ -86,11 +89,12 @@
       <div class="centered-section">
           <div class="experiment-dropdown">
             <label for="experiment-select" class="sr-only">Experiment</label>
-              <select id="experiment-select">
-                <option value="experiment1">Experiment 1</option>
-                <option value="experiment2">Experiment 2</option>
-                <option value="experiment3">Experiment 3</option>
-              </select>
+            <select id="experiment-select" [(ngModel)]="selectedExperimentId">
+                    
+              <option *ngFor="let experiment of experiments" [value]="experiment.id">
+                {{ experiment.name }}
+              </option>
+            </select>
           </div>
       </div>
     
@@ -128,8 +132,8 @@
           <span>{{ experiment.name }}</span>
           <span>{{ experiment.description }}</span>
           <span>{{ experiment.enabled }}</span>
-          <span>{{ experiment.addedOn }}</span>
-          <span>{{ experiment.lastModified }}</span>
+          <span>{{ experiment.addedOn | date:'medium' }}</span>
+          <span>{{ experiment.lastModified | date:'medium' }}</span>
           <span><button type="submit" (click)="deleteExperiment(experiment.id)">Delete</button></span>
           <span><button type="submit" (click)="setUsers(experiment.id)">Set Users</button></span>
         </div>
