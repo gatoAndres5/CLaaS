@@ -32,11 +32,12 @@
     <label for="experiments">Choose the experiments this user shall have access to</label>
 <div class="experiment-checkbox-list">
   <div *ngFor="let experiment of userExperiments" class="experiment-checkbox-item">
-    <input type="checkbox" [value]="experiment.id" [(ngModel)]="experiment.selected">
+    <input type="checkbox" [value]="experiment.id" [checked]="isSelected(experiment.id)" (change)="toggleExperimentSelection(experiment.id)">
     <label>{{ experiment.name }}</label>
   </div>
 </div>
-<button type="submitLeft">Add User</button>
+
+    <button type="submitLeft" (click)="addUser()">Add User</button>
 
 
 
@@ -63,5 +64,39 @@
 
 <button type="submit">Import Experiment Users</button>
 
+
+
 <h2 class='content-title'>Current Users</h2>
-<hr class="divider">
+<div *ngIf="users.length > -1h">
+  
+  <hr class="divider">
+  <div class="experiment-header">
+    <span>Username</span>
+    <span>Name</span>
+    <span>Account Type</span>
+    <span>E-mail Address</span>
+    <span>IP Address </span>
+    <span>Created On</span>
+    <span>Last Modified</span>
+    <span>Registration Status</span>
+    <span>Edit User</span>
+    <span>Delete User</span>
+  </div>
+</div>
+  <hr class="divider">
+<div *ngFor="let user of users" class="user-item">
+  <div class="user-details">
+    <span>{{ user.username }}</span>
+    <span>{{ user.name }}</span>
+    <span>{{ user.accountType }}</span>
+    <span>{{ user.email }}</span>
+    <span>{{ user.ipAddress }}</span>
+    <span>{{ user.created | date:'medium' }}</span>
+    <span>{{ user.lastModified | date:'medium' }}</span>
+    <span>{{ user.regStatus }}</span>
+    <span><button type="submit" (click)="setUsers(user.username)">Edit</button></span>
+    <span><button type="submit" (click)="deleteUser(user.username)">Delete</button></span>
+  </div>
+  <hr class="divider"> <!-- Add the <hr> tag here, it will be horizontal -->
+</div>
+
