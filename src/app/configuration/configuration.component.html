@@ -20,18 +20,17 @@
 <h2 class="content-title">Add VM Image</h2>
 <hr class="divider"> 
 <div class="add-content">
-    <form (ngSubmit)="login()" #loginForm="ngForm">
-        <div class="form-group">
-          <label for="username">VM UID</label>
-          <input type="text" id="username" name="username" [(ngModel)]="username" required class="input-long">
-        </div>
-        <div class="form-group">
-          <label for="password">VM Name</label>
-          <input type="password" id="password" name="password" [(ngModel)]="password" required class="input-long">
-        </div>
-        
-        <button type="submit" [disabled]="!loginForm.valid">Save VM Image</button>
-      </form>
+  <form (ngSubmit)="saveVMImage()" #vmImageForm="ngForm">
+    <div class="form-group">
+      <label for="vmImage">VM UID</label>
+      <input type="text" id="vmImageUID" name="vmImageUID" [(ngModel)]="VMImageUID" required class="input-long">
+    </div>
+    <div class="form-group">
+      <label for="vmImageName">VM Name</label>
+      <input type="text" id="vmImageName" name="vmImageName" [(ngModel)]="VMImageName" required class="input-long">
+    </div>
+    <button type="submit" [disabled]="isSavingVMImage || !vmImageForm.valid">Save VM Image</button>
+  </form>
     </div>
 <h2 class="content-title">Add Vpcs</h2>
     <hr class="divider"> 
@@ -144,8 +143,32 @@
     </div>
     
 
-<h2 class="content-title">VM Images</h2>
-    <hr class="divider"> 
+    <div *ngIf="VMImages.length > -1">
+      <h2 class="content-title">VM Images</h2>
+      <hr class="divider">
+      <div class="experiment-header">
+        <span>#</span>
+        <span>VM Name/Description</span>
+        <span>VM UID</span>
+        <span>Added On</span>
+        <span>Last Modification</span>
+        <span>Delete VM Image</span>
+      </div>
+      <hr class="divider">
+      <div *ngFor="let VMImages of VMImages" class="experiment-item">
+        <div class="experiment-details">
+          <span>{{ VMImages.id }}</span>
+          <span>{{ VMImages.name }}</span>
+          <span>{{ VMImages.UID }}</span>
+          <span>{{ VMImages.added | date:'medium' }}</span>
+          <span>{{ VMImages.lastModified | date:'medium' }}</span>
+          <span><button type="submit" (click)="deleteVMImages(VMImages.id)">Delete VM Image</button></span>
+        </div>
+        <hr class="divider"> <!-- Add the <hr> tag here, it will be horizontal -->
+      </div>
+      
+      
+    </div> 
 
 <h2 class="content-title">VPCs</h2>
     <hr class="divider"> 

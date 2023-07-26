@@ -2,6 +2,8 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Experiment } from '../experiment.model';
 import { ExperimentService } from '../experiment.service';
+import { VMImage } from '../vmimage.model';
+import { VMImagesService } from '../vmimages.service';
 
 @Component({
   selector: 'app-configuration',
@@ -10,9 +12,13 @@ import { ExperimentService } from '../experiment.service';
 })
 export class ConfigurationComponent implements OnInit {
   experiments: Experiment[] = [];
+  VMImages: VMImage[] = [];
   experimentName: string = '';
   experimentDescription: string = '';
+  VMImageName: string = '';
+  VMImageUID: string = '';
   isSavingExperiment = false;
+  isSavingVMImage = false;
   selectedExperimentId: number | undefined;
   login(){
 
@@ -25,8 +31,9 @@ export class ConfigurationComponent implements OnInit {
   
 
   @ViewChild('experimentForm') experimentForm!: NgForm;
+  @ViewChild('vmImageForm') vmImageForm!: NgForm;
 
-  constructor(private experimentService: ExperimentService) {}
+  constructor(private experimentService: ExperimentService, private VMImagesService: VMImagesService) {}
 
   ngOnInit() {
     // Fetch the experiments only if the experiments array is empty
@@ -34,6 +41,9 @@ export class ConfigurationComponent implements OnInit {
     console.log('Experiments array length on ngOnInit:', this.experiments.length);
     if (this.experiments.length === 0) {
       this.fetchExperiments();
+    }
+    if (this.VMImages.length === 0) {
+      this.fetchVMImages();
     }
   }
 
@@ -43,6 +53,14 @@ export class ConfigurationComponent implements OnInit {
       this.experiments = experiments;
       console.log('Experiments array after fetching:', this.experiments);
       console.log('Experiments array length after fetching:', this.experiments.length);
+    });
+  }
+  fetchVMImages() {
+    console.log('Arrived in fetchVMImages');
+    this.VMImagesService.getVMImages().subscribe((VMImages: VMImage[]) => {
+      this.VMImages = VMImages;
+      console.log('VM Images array after fetching:', this.VMImages);
+      console.log('VM Images array length after fetching:', this.VMImages.length);
     });
   }
 
@@ -83,7 +101,41 @@ export class ConfigurationComponent implements OnInit {
     console.log('Experiments array length after adding:', this.experiments.length);
     });
   }
-  
+  saveVMImage(): void {
+    if (this.isSavingVMImage || !this.vmImageForm.valid) {
+      return;
+    }
+
+    const isDuplicate = this.VMImages.some(VMImage => VMImage.name === this.VMImageName);
+
+    if (isDuplicate) {
+      console.log('VM Image name already exists. Please choose a different name.');
+      return;
+    }
+
+    this.isSavingVMImage = true;
+    const newVMImage: VMImage = {
+      id: 0,
+      name: this.VMImageName,
+      UID: this.VMImageUID,
+      added: new Date(),
+      lastModified: new Date()
+    };
+
+    this.VMImagesService.addVMImage(newVMImage).subscribe((addedVMImage: VMImage) => {
+      this.VMImages.push(addedVMImage);
+      this.VMImageName = '';
+      this.VMImageUID = '';
+      this.isSavingVMImage = false;
+      console.log('VM Images array after adding:', this.VMImages);
+    console.log('VM Images array length after adding:', this.VMImages.length);
+    });
+  }
+  deleteVMImages(VMImageId: number) {
+    this.VMImagesService.deleteVMImage(VMImageId).subscribe(() => {
+      this.VMImages = this.VMImages.filter(VMImage => VMImage.id !== VMImageId);
+    });
+  }
 }
 
 
