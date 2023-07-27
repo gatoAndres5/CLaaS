@@ -4,6 +4,8 @@ import { Experiment } from '../experiment.model';
 import { ExperimentService } from '../experiment.service';
 import { VMImage } from '../vmimage.model';
 import { VMImagesService } from '../vmimages.service';
+import { Vpc } from '../vpc.model';
+import { VpcService } from '../vpc.service';
 
 @Component({
   selector: 'app-configuration',
@@ -13,13 +15,20 @@ import { VMImagesService } from '../vmimages.service';
 export class ConfigurationComponent implements OnInit {
   experiments: Experiment[] = [];
   VMImages: VMImage[] = [];
+  vpc: Vpc[] = [];
+  vpcID: string = '';
+  CIDRBlock: string = '';
+  SecurityGroup: string = '';
   experimentName: string = '';
   experimentDescription: string = '';
   VMImageName: string = '';
   VMImageUID: string = '';
   isSavingExperiment = false;
   isSavingVMImage = false;
+  isSavingVPC = false;
   selectedExperimentId: number | undefined;
+  selectedVMImageId: number | undefined;
+  selectedVpcId: number | undefined;
   login(){
 
   }
@@ -32,8 +41,9 @@ export class ConfigurationComponent implements OnInit {
 
   @ViewChild('experimentForm') experimentForm!: NgForm;
   @ViewChild('vmImageForm') vmImageForm!: NgForm;
+  @ViewChild('vpcForm') vpcForm!:NgForm;
 
-  constructor(private experimentService: ExperimentService, private VMImagesService: VMImagesService) {}
+  constructor(private experimentService: ExperimentService, private VMImagesService: VMImagesService,private VpcService: VpcService) {}
 
   ngOnInit() {
     // Fetch the experiments only if the experiments array is empty
@@ -44,6 +54,9 @@ export class ConfigurationComponent implements OnInit {
     }
     if (this.VMImages.length === 0) {
       this.fetchVMImages();
+    }
+    if (this.vpc.length === 0) {
+      this.fetchVPC();
     }
   }
 
@@ -61,6 +74,14 @@ export class ConfigurationComponent implements OnInit {
       this.VMImages = VMImages;
       console.log('VM Images array after fetching:', this.VMImages);
       console.log('VM Images array length after fetching:', this.VMImages.length);
+    });
+  }
+  fetchVPC() {
+    console.log('Arrived in fetchVPC');
+    this.VpcService.getVPC().subscribe((Vpc: Vpc[]) => {
+      this.vpc= Vpc;
+      console.log('VPC array after fetching:', this.vpc);
+      console.log('VPC array length after fetching:', this.vpc.length);
     });
   }
 
@@ -134,6 +155,42 @@ export class ConfigurationComponent implements OnInit {
   deleteVMImages(VMImageId: number) {
     this.VMImagesService.deleteVMImage(VMImageId).subscribe(() => {
       this.VMImages = this.VMImages.filter(VMImage => VMImage.id !== VMImageId);
+    });
+  }
+  saveVPC(): void {
+    if (this.isSavingVPC || !this.vpcForm.valid) {
+      return;
+    }
+
+    const isDuplicate = this.vpc.some(vpc => vpc.vpcID === this.vpcID);
+
+    if (isDuplicate) {
+      console.log('VPC Id already exists. Please choose a different Id.');
+      return;
+    }
+
+    this.isSavingVPC = true;
+    const newVPC: Vpc = {
+      id: 0,
+      vpcID: this.vpcID,
+      CIDRBlock: this.CIDRBlock,
+      CompleteCIDRBlock: this.CIDRBlock + 2,
+      SecurityGroup: this.SecurityGroup
+    };
+
+    this.VpcService.addVPC(newVPC).subscribe((addedVpc: Vpc) => {
+      this.vpc.push(addedVpc);
+      this.vpcID = '';
+      this.CIDRBlock = '';
+      this.SecurityGroup = '';
+      this.isSavingVPC = false;
+      console.log('VPC array after adding:', this.vpc);
+    console.log('VPC array length after adding:', this.vpc.length);
+    });
+  }
+  deleteVPC(vpcID: number) {
+    this.VpcService.deleteVPC(vpcID).subscribe(() => {
+      this.vpc = this.vpc.filter(Vpc => Vpc.id !== vpcID);
     });
   }
 }

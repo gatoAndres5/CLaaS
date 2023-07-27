@@ -35,21 +35,21 @@
 <h2 class="content-title">Add Vpcs</h2>
     <hr class="divider"> 
     <div class="add-content">
-        <form (ngSubmit)="login()" #loginForm="ngForm">
+        <form (ngSubmit)="saveVPC()" #vpcForm="ngForm">
             <div class="form-group">
-              <label for="username">AWS Vpc Id</label>
-              <input type="text" id="username" name="username" [(ngModel)]="username" required class="input-long">
+              <label for="vpcId">AWS Vpc Id</label>
+              <input type="text" id="vpcId" name="vpcId" [(ngModel)]="vpcID" required class="input-long">
             </div>
             <div class="form-group">
-              <label for="password">CIDR Block</label>
-              <input type="password" id="password" name="password" [(ngModel)]="password" required class="input-long">
+              <label for="CIDR">CIDR Block</label>
+              <input type="text" id="CIDR" name="CIDR" [(ngModel)]="CIDRBlock" required class="input-long">
             </div>
             <div class="form-group">
-                <label for="password">Security Group</label>
-                <input type="password" id="password" name="password" [(ngModel)]="password" required class="input-long">
+                <label for="SecurityGroup">Security Group</label>
+                <input type="text" id="SecurityGroup" name="SecurityGroup" [(ngModel)]="SecurityGroup" required class="input-long">
               </div>
             
-            <button type="submit" [disabled]="!loginForm.valid">Save Vpc</button>
+            <button type="submit" [disabled]="isSavingVPC || !vpcForm.valid">Save VPC</button>
           </form>
         </div>
 <h2 class="content-title">Add VM Images to Experiments</h2>
@@ -70,16 +70,16 @@
               <div class="centered-section">
                 <div class="experiment-dropdown">
                   <label for="experiment-select" class="sr-only">VM Image</label>
-                  <select id="experiment-select" [(ngModel)]="selectedExperimentId">
+                  <select id="experiment-select" [(ngModel)]="selectedVMImageId">
                     
-                    <option *ngFor="let experiment of experiments" [value]="experiment.id">
-                      {{ experiment.name }}
+                    <option *ngFor="let vmImage of VMImages" [value]="vmImage.id">
+                      {{ vmImage.name }}
                     </option>
                   </select>
                   
                 </div>
                 </div>
-                <button type="submit" [disabled]="!loginForm.valid">Add Dependency</button>
+                <button type="submit" [disabled]="!vpcForm.valid">Add Dependency</button>
             </div>
         </div>
 <h2 class="content-title">Add VPCs to Experiments</h2>
@@ -101,15 +101,16 @@
         <div class="centered-section">
           <div class="experiment-dropdown">
             <label for="experiment-select" class="sr-only">VPCs</label>
-              <select id="experiment-select">
-                <option value="experiment1">Experiment 1</option>
-                <option value="experiment2">Experiment 2</option>
-                <option value="experiment3">Experiment 3</option>
-              </select>
+            <select id="experiment-select" [(ngModel)]="selectedVpcId">
+                    
+              <option *ngFor="let vpc of vpc" [value]="vpc.id">
+                {{ vpc.vpcID }}
+              </option>
+            </select>
           </div>
           
         </div>
-        <button type="submit" [disabled]="!loginForm.valid">Add Dependency</button>
+        <button type="submit" [disabled]="!vpcForm.valid">Add Dependency</button>
     </div>
     </div>
 
@@ -170,8 +171,32 @@
       
     </div> 
 
-<h2 class="content-title">VPCs</h2>
-    <hr class="divider"> 
+    <div *ngIf="vpc.length > -1">
+      <h2 class="content-title">VPCS</h2>
+      <hr class="divider">
+      <div class="experiment-header">
+        <span>#</span>
+        <span>VPC ID</span>
+        <span>CIDR Block</span>
+        <span>Complete CIDR Block</span>
+        <span>Security Group</span>
+        <span>Delete VPC</span>
+      </div>
+      <hr class="divider">
+      <div *ngFor="let vpc of vpc" class="experiment-item">
+        <div class="experiment-details">
+          <span>{{ vpc.id }}</span>
+          <span>{{ vpc.vpcID }}</span>
+          <span>{{ vpc.CIDRBlock }}</span>
+          <span>{{ vpc.CompleteCIDRBlock }}</span>
+          <span>{{ vpc.SecurityGroup }}</span>
+          <span><button type="submit" (click)="deleteVPC(vpc.id)">Delete VPC</button></span>
+        </div>
+        <hr class="divider"> <!-- Add the <hr> tag here, it will be horizontal -->
+      </div>
+      
+      
+    </div>  
 
 <h2 class="content-title">VM Images to Experiments Dependencies</h2>
     <hr class="divider"> 
