@@ -6,6 +6,8 @@ import { VMImage } from '../vmimage.model';
 import { VMImagesService } from '../vmimages.service';
 import { Vpc } from '../vpc.model';
 import { VpcService } from '../vpc.service';
+import { DependencyService } from '../dependency.service'
+import { Dependency } from '../dependency.model';
 
 @Component({
   selector: 'app-configuration',
@@ -14,8 +16,10 @@ import { VpcService } from '../vpc.service';
 })
 export class ConfigurationComponent implements OnInit {
   experiments: Experiment[] = [];
+  experimentVMImageMap: { [experimentId: number]: number } = {};
   VMImages: VMImage[] = [];
   vpc: Vpc[] = [];
+  dependency: Dependency[] = [];
   vpcID: string = '';
   CIDRBlock: string = '';
   SecurityGroup: string = '';
@@ -26,7 +30,9 @@ export class ConfigurationComponent implements OnInit {
   isSavingExperiment = false;
   isSavingVMImage = false;
   isSavingVPC = false;
-  selectedExperimentId: number | undefined;
+  selectedExperiment: string = '';
+  selectedVMImage: string = '';
+  selectedExperimentId: number | undefined = undefined;
   selectedVMImageId: number | undefined;
   selectedVpcId: number | undefined;
   login(){
@@ -42,8 +48,9 @@ export class ConfigurationComponent implements OnInit {
   @ViewChild('experimentForm') experimentForm!: NgForm;
   @ViewChild('vmImageForm') vmImageForm!: NgForm;
   @ViewChild('vpcForm') vpcForm!:NgForm;
+  
 
-  constructor(private experimentService: ExperimentService, private VMImagesService: VMImagesService,private VpcService: VpcService) {}
+  constructor(private experimentService: ExperimentService, private VMImagesService: VMImagesService,private VpcService: VpcService,private dependencyService: DependencyService) {}
 
   ngOnInit() {
     // Fetch the experiments only if the experiments array is empty
@@ -58,7 +65,35 @@ export class ConfigurationComponent implements OnInit {
     if (this.vpc.length === 0) {
       this.fetchVPC();
     }
+    if (this.dependency.length === 0){
+      this.fetchDependencies();
+    }
+    this.selectedExperimentId = 0;
+    this.selectedVMImageId = 0;
+    this.experimentName = '';
   }
+  // This method is called whenever the selectedExperimentId is changed in the dropdown
+  
+  
+  onExperimentSelectChange(): void {
+    if (!this.selectedExperiment) {
+      console.log('No experiment selected.');
+      return;
+    }
+  
+    // Find the selected experiment from the experiments array by name
+  const selectedExperiment = this.experiments.find(experiment => experiment.name === this.selectedExperiment);
+
+  // Check if the selected experiment is valid and log its name
+  if (selectedExperiment) {
+    //console.log('Selected Experiment:', selectedExperiment.name);
+  } else {
+    //console.log('Invalid experiment or no experiment found.');
+  }
+}
+  
+  
+  
 
   fetchExperiments() {
     console.log('Arrived in fetchExperiments');
@@ -84,7 +119,14 @@ export class ConfigurationComponent implements OnInit {
       console.log('VPC array length after fetching:', this.vpc.length);
     });
   }
-
+  fetchDependencies(){
+    console.log('Arrived in fetchDependencies');
+    this.dependencyService.getDependency().subscribe((Dependency: Dependency[]) => {
+      this.dependency= Dependency;
+      console.log('Dependency array after fetching:', this.dependency);
+      console.log('Dependency array length after fetching:', this.dependency.length);
+    });
+  }
   deleteExperiment(experimentId: number) {
     this.experimentService.deleteExperiment(experimentId).subscribe(() => {
       this.experiments = this.experiments.filter(experiment => experiment.id !== experimentId);
@@ -193,6 +235,62 @@ export class ConfigurationComponent implements OnInit {
       this.vpc = this.vpc.filter(Vpc => Vpc.id !== vpcID);
     });
   }
+  saveDependency(): void {
+    if (!this.selectedExperiment || !this.selectedVMImage) {
+      console.log('Please select an experiment and a VM image.');
+      return;
+    }
+    
+    // Find the selected experiment from the experiments array
+    const selectedExperiment = this.experiments.find(experiment => experiment.name === this.selectedExperiment);
+    console.log('Selected Experiment:', selectedExperiment);
+  
+    // Find the selected VM image from the VMImages array
+    const selectedVMImage = this.VMImages.find(vmImage => vmImage.name === this.selectedVMImage);
+    console.log('Selected VM Image:', selectedVMImage);
+  
+    // Check if the selected experiment and VM image are valid
+    if (!selectedExperiment || !selectedVMImage) {
+      console.log('Invalid experiment or VM image');
+      return;
+    }
+  
+    // Create a new dependency object
+    const newDependency = {
+      id: 0,
+      experimentName: selectedExperiment.name,
+      vmimageName: selectedVMImage.name,
+      vmimageUID: selectedVMImage.UID,
+      addedOn: new Date()
+      // Add any other properties you want for the dependency
+    };
+  
+    // Log the new dependency object
+    console.log('New Dependency:', newDependency);
+  
+    // Save the new dependency using the dependency service
+    //this.dependencyService.saveDependency(newDependency);
+  
+    // Clear the selected values after saving
+    this.selectedExperiment = "";
+    this.selectedVMImage = "";
+    this.dependencyService.addDependency(newDependency).subscribe((addedDependency: Dependency) => {
+      this.dependency.push(addedDependency);
+      
+      console.log('Dependency array after adding:', this.dependency);
+    console.log('Dependency array length after adding:', this.dependency.length);
+    });
+  }
+  
+  
+  deleteDependency(dependencyId: number) {
+    
+  }
+  deleteDependencyVMInstanceRecords(experimentId:number,vmImageId:number){
+
+  }
+  
+  
 }
 
 

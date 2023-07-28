@@ -52,36 +52,34 @@
             <button type="submit" [disabled]="isSavingVPC || !vpcForm.valid">Save VPC</button>
           </form>
         </div>
-<h2 class="content-title">Add VM Images to Experiments</h2>
+        <h2 class="content-title">Add VM Images to Experiments</h2>
         <hr class="divider"> 
         <div class="add-content">
           <div class="centered-section">
             <div class="experiment-dropdown">
               <label for="experiment-select" class="sr-only">Experiment</label>
-              <select id="experiment-select" [(ngModel)]="selectedExperimentId">
-                    
-                <option *ngFor="let experiment of experiments" [value]="experiment.id">
+              <select id="experiment-select" [(ngModel)]="selectedExperiment">
+                <option *ngFor="let experiment of experiments" [value]="experiment.name">
                   {{ experiment.name }}
                 </option>
               </select>
             </div>
+          </div>
+          <div class="add-content">
+            <div class="centered-section">
+              <div class="experiment-dropdown">
+                <label for="experiment-select" class="sr-only">VM Image</label>
+                <select id="experiment-select" [(ngModel)]="selectedVMImage">
+                  <option *ngFor="let vmImage of VMImages" [value]="vmImage.name">
+                    {{ vmImage.name }}
+                  </option>
+                </select>
+              </div>
             </div>
-            <div class="add-content">
-              <div class="centered-section">
-                <div class="experiment-dropdown">
-                  <label for="experiment-select" class="sr-only">VM Image</label>
-                  <select id="experiment-select" [(ngModel)]="selectedVMImageId">
-                    
-                    <option *ngFor="let vmImage of VMImages" [value]="vmImage.id">
-                      {{ vmImage.name }}
-                    </option>
-                  </select>
-                  
-                </div>
-                </div>
-                <button type="submit" [disabled]="!vpcForm.valid">Add Dependency</button>
-            </div>
+            <button type="submit" [disabled]="!selectedExperiment || !selectedVMImage" (click)="saveDependency()">Add Dependency</button>
+          </div>
         </div>
+        
 <h2 class="content-title">Add VPCs to Experiments</h2>
   <hr class="divider"> 
     <div class="add-content">
@@ -198,5 +196,34 @@
       
     </div>  
 
-<h2 class="content-title">VM Images to Experiments Dependencies</h2>
-    <hr class="divider"> 
+
+    <div *ngIf="dependency.length > -1">
+      <h2 class="content-title">VM Images to Experiments Dependencies</h2>
+      <hr class="divider">
+      <div class="experiment-header">
+        <span>#</span>
+        <span>Experiment Name</span>
+        <span>VM Image Name</span>
+        <span>VM Image ID</span>
+        <span>Added On</span>
+        <span>Delete Dependency</span>
+        <span>Delete Dependent VM Instance Records</span>
+      </div>
+      <hr class="divider">
+      
+          <!-- Display the number of dependencies -->
+          <div *ngFor="let dependency of dependency" class="experiment-item">
+            <div class="experiment-details">
+              <span>{{ dependency.id }}</span>
+              <span>{{ dependency.experimentName }}</span>
+              <span>{{ dependency.vmimageName }}</span>
+              <span>{{ dependency.vmimageUID }}</span>
+              <span>{{ dependency.addedOn | date:'medium'}}</span>
+              <span><button type="submit" (click)="deleteDependency(dependency.id)">Delete VPC</button></span>
+              <span><button type="submit" (click)="deleteDependency(dependency.id)">Delete VPC</button></span>
+            </div>
+            <hr class="divider"> <!-- Add the <hr> tag here, it will be horizontal -->
+          </div>
+    
+        </div>
+        
