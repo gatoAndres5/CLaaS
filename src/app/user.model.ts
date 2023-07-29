@@ -12,6 +12,6 @@ export interface User {
     id: number;
     password: string;
     rePassword: string;
-    experiments: number[];
+    experiments: string[];
   }
   

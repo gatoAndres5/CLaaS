@@ -21,18 +21,18 @@
     <input type="text" id="username" name="username" [(ngModel)]="password" required class="input-long">
     <label for="username">Re-enter New Password</label>
     <input type="text" id="username" name="username" [(ngModel)]="rePassword" required class="input-long">
-    <label for="username">Account Type</label>
-    <div class="experiment-dropdown">
-      <select id="experiment-select">
-        <option value="experiment1">Student</option>
-        <option value="experiment2">Professor</option>
-        <option value="experiment3">Administrator</option>
-      </select>
-    </div>
+    <label for="accountType">Account Type</label>
+<div class="experiment-dropdown">
+  <select id="accountType" [(ngModel)]="selectedAccountType">
+    <option value="Student">Student</option>
+    <option value="Professor">Professor</option>
+    <option value="Administrator">Administrator</option>
+  </select>
+</div>
     <label for="experiments">Choose the experiments this user shall have access to</label>
 <div class="experiment-checkbox-list">
   <div *ngFor="let experiment of userExperiments" class="experiment-checkbox-item">
-    <input type="checkbox" [value]="experiment.id" [checked]="isSelected(experiment.id)" (change)="toggleExperimentSelection(experiment.id)">
+    <input type="checkbox" [value]="experiment.id" [checked]="isSelected(experiment.name)" (change)="toggleExperimentSelection(experiment.name)">
     <label>{{ experiment.name }}</label>
   </div>
 </div>
@@ -49,20 +49,21 @@
 </div>
 </div>
 
-<h2 class='content-title'>Import Users From File</h2>
+<h2 class="content-title">Import Users From File</h2>
 <hr class="divider"> 
 
-<h2 class='smallcontent-title'>Select a file in the format of: Username, First Name, Last Name, Email, Password, OTP Secret, 1|2 1 = Student, 2 = Admin \n</h2>
+<h2 class="smallcontent-title">Select a file in the format of: Username, First Name, Last Name, Email, Password, OTP Secret, 1|2 1 = Student, 2 = Admin \n</h2>
 
 <div class="slides-section">
   <div class="file-upload-container">
     <label for="file-upload">User Import File</label>
-    <input type="file" id="file-upload" accept=".pdf,.ppt,.pptx" />
+    <input type="file" id="file-upload" accept=".csv" (change)="onFileSelected($event)" />
     <!-- Additional elements for handling the uploaded file -->
   </div>
 </div>
 
-<button type="submit">Import Experiment Users</button>
+<button type="button" (click)="importUsers()">Import Experiment Users</button>
+
 
 
 

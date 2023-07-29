@@ -40,6 +40,18 @@ export class UserService {
     users.push(user);
     this.saveUsersToLocalStorage(users);
   }
+  // Function to save an array of users to local storage
+  saveUsers(users: User[]): void {
+    // Fetch existing users from local storage
+    const existingUsers = this.getUsersFromLocalStorage();
+
+    // Combine existing users with new users to create the updated list
+    const updatedUsers = [...existingUsers, ...users];
+
+    // Save the updated list to local storage
+    this.saveUsersToLocalStorage(updatedUsers);
+  }
+
 }
 
 
