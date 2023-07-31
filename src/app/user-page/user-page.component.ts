@@ -30,6 +30,7 @@ export class UserPageComponent {
   userExperiments: Experiment[] = [];
   users: User[] = [];
   selectedExperimentName: string[] = [];
+  selectedFile: File |undefined ;
 
   constructor(private experimentService: ExperimentService,private userService: UserService) {}
 
@@ -72,12 +73,14 @@ export class UserPageComponent {
     });
   }
 
-  deleteUser(username: string) {
-    // Call the user service to delete the user
-    this.userService.deleteUser(username).subscribe(() => {
-      // Remove the deleted user from the local array
-      this.users = this.users.filter((user) => user.id !== user.id);
-    });
+  deleteUser(username: string): void {
+    // Delete the user from the service and get the updated user list
+    const updatedUsers = this.userService.deleteUser(username);
+  
+    // Update the component's users array with the updated user list
+    this.users = updatedUsers;
+  
+    console.log('User deleted:', username);
   }
   addUser() {
     // Check if all required fields are filled
@@ -126,131 +129,125 @@ export class UserPageComponent {
     console.log('New user added:', newUser);
   }
   // Event handler for file input change event
-  onFileSelected(event: Event): void {
-    const fileInput = event.target as HTMLInputElement;
+// Event handler for file input change event
+onFileSelected(event: Event): void {
+  const fileInput = event.target as HTMLInputElement;
     const file = fileInput.files?.[0]; // Get the selected file
-  
-    if (file) {
-      // Read the contents of the selected file using FileReader
-      const fileReader = new FileReader();
-      fileReader.onload = () => {
-        // Process the file contents (result is the content of the file as a string)
-        if (typeof fileReader.result === 'string') {
-          this.processFile(fileReader.result);
-        } else {
-          console.log('Error reading file.');
-        }
-      };
-      fileReader.readAsText(file);
-    }
-  }
-  
-  // Function to process the selected CSV file
-  processFile(csvData: string): void {
-    // Parse CSV data to get user data array
-    const usersData: any[] = this.parseCsvData(csvData);
-  
-    // Check if any users were parsed from the CSV data
-    if (usersData.length === 0) {
-      console.log('No user data found in the CSV file.');
-      return;
-    }
-  
-    // Convert the parsed user data to User objects
-    const createdUsers: User[] = usersData.map(userData => ({
-      id: 0, // You can use your logic to generate a unique ID
-      username: userData.username,
-      firstName: userData.firstName,
-      lastName: userData.lastName,
-      name: userData.firstName + ' ' + userData.lastName,
-      email: userData.email,
-      password: userData.password,
-      rePassword: userData.password,
-      // Add other properties as needed based on your CSV format
-      accountType: userData.accountType === '1' ? 'Student' : 'Admin', // Example for accountType mapping
-      experiments: [], // Initialize the experiments array with an empty array for now
-      created: new Date(),
-      lastModified: new Date(),
-      regStatus: 'Not Registered',
-      ipAddress: 'Not Active'
-    }));
-  
-    // Save the created users to the UserService
-    this.userService.saveUsers(createdUsers);
-  
-    console.log('Users created:', createdUsers);
-  }
-  
-  // Function to parse CSV data and extract user data
-  private parseCsvData(csvData: string): any[] {
-    const lines = csvData.split('\n');
-    const headers = lines[0].split(','); // Assuming the headers are in the first line
-    const usersData = [];
-  
-    for (let i = 1; i < lines.length; i++) {
-      const userValues = lines[i].split(',');
-  
-      if (userValues.length === headers.length) {
-        const user: any = {};
-        for (let j = 0; j < headers.length; j++) {
-          // Use the headers to map the values to the user properties
-          user[headers[j]] = userValues[j].trim();
-        }
-        usersData.push(user);
-      }
-    }
-  
-    return usersData;
-  }
-  
-  // Function to create users from CSV data
-createUsers(csvData: string): void {
-  // Parse the CSV data and extract user information
-  const usersData = this.parseCsvData(csvData);
 
-  if (usersData.length === 0) {
-    console.log('No user data found in the CSV file.');
+    if (file) {
+      this.selectedFile = file; // Set the selected file to the component property
+      console.log('Selected file:', this.selectedFile.name);
+    } else {
+      this.selectedFile = undefined; // Reset the selected file property if no file is selected
+    }
+}
+
+// Function to parse CSV data and extract user data
+private parseCsvData(csvData: string): any[] {
+  const lines = csvData.split('\n');
+  const usersData = [];
+
+  for (let i = 0; i < lines.length; i++) {
+    const userValues = lines[i].split(',');
+
+    if (userValues.length >= 5) {
+      const user: any = {
+        // Map the values directly to the user properties
+        username: userValues[0].trim(),
+        firstName: userValues[1].trim(),
+        lastName: userValues[2].trim(),
+        email: userValues[3].trim(),
+        password: userValues[4].trim(),
+        accountType: userValues[5].trim()
+        // You can add more properties as needed based on your CSV format
+      };
+      usersData.push(user);
+    }
+  }
+
+  console.log('Parsed user data:', usersData);
+  return usersData;
+}
+// Function to trigger importUsers() with the selected file
+onImportUsers(): void {
+  if (!this.selectedFile) {
+    console.log('No file selected.');
     return;
   }
 
-  const createdUsers: User[] = [];
-
-  // Iterate through the extracted user data and create user objects
-  usersData.forEach((userData) => {
-    const newUser: User = {
-      id: this.users.length + 1, // You can use this logic to generate a unique ID for the new user
-      username: userData['Username'],
-      firstName: userData['First Name'],
-      lastName: userData['Last Name'],
-      name: `${userData['First Name']} ${userData['Last Name']}`,
-      email: userData['Email'],
-      password: userData['Password'],
-      rePassword: userData['Password'], // Assuming the re-entered password is the same as the password
-      accountType: userData['Account Type'], // Assuming the 'Account Type' value is either '1' or '2'
-      experiments: [], // You may need to set the experiments array based on your requirements
-      created: new Date(),
-      lastModified: new Date(),
-      regStatus: 'Not Registered',
-      ipAddress: 'Not Active',
-    };
-
-    // Add the new user to the list of created users
-    createdUsers.push(newUser);
-  });
-
-  // Call the user service to save the created users
-  this.userService.saveUsers(createdUsers);
-
-  // Add the created users to the list of users
-  this.users.push(...createdUsers);
-
-  console.log('Users created successfully:', createdUsers);
+  // Call importUsers() with the selected file
+  this.importUsers(this.selectedFile);
 }
 
-  // Function to import users when the button is clicked
-  importUsers(): void {
-    // Add any additional logic you need when the "Import Experiment Users" button is clicked
-    // You can display a success message or any other user feedback if required
+
+// Function to import users from the CSV file
+importUsers(file: File): void {
+  if (!this.selectedFile) {
+    console.log('No file selected.');
+    return;
   }
+  const maxId = this.users.reduce((max, user) => (user.id > max ? user.id : max), 0);
+
+  // Assign new ids for the created users
+  let nextId = maxId + 1;
+  // Read the contents of the selected file using FileReader
+  const fileReader = new FileReader();
+  fileReader.onload = () => {
+    // Process the file contents (result is the content of the file as a string)
+    if (typeof fileReader.result === 'string') {
+      // Parse CSV data and extract user information
+      const usersData: any[] = this.parseCsvData(fileReader.result);
+      // Convert CSV data to User objects and save them
+      const createdUsers: User[] = usersData.map(userData => ({
+        id: nextId++, // You can use your logic to generate a unique ID for the new user
+        username: userData['username'],
+        firstName: userData['firstName'],
+        lastName: userData['lastName'],
+        name: `${userData['firstName']} ${userData['lastName']}`,
+        email: userData['email'],
+        password: userData['password'],
+        rePassword: userData['password'],
+        // Add other properties as needed based on your CSV format
+        accountType: this.mapAccountType(userData['accountType']), // Assuming a default value for accountType
+        experiments: [], // Initialize the experiments array with an empty array for now
+        created: new Date(),
+        lastModified: new Date(),
+        regStatus: 'Not Registered',
+        ipAddress: 'Not Active',
+      }));
+
+      // Save the created users using the UserService's saveUsers method
+      this.userService.saveUsers(createdUsers);
+
+      // Update the users array with the newly created users
+      this.users.push(...createdUsers);
+
+      console.log('Users added from CSV data:', createdUsers);
+
+      console.log('Users added from CSV data:', createdUsers);
+      console.log('Complete users array:', this.users);
+    } else {
+      console.log('Error reading file.');
+    }
+  };
+  fileReader.readAsText(file);
+}
+// Function to map account type based on the CSV value
+private mapAccountType(csvAccountType: string): string {
+  switch (csvAccountType) {
+    case '1':
+      return 'Student';
+    case '2':
+      return 'Administrator';
+    case '3':
+      return 'Professor';
+    default:
+      return 'Unknown';
+  }
+}
+
+
+
+  
 }
 

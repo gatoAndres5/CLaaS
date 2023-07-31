@@ -7,7 +7,7 @@ import { User } from './user.model';
 })
 export class UserService {
   private localStorageKey = 'users'; // Key to store users in local storage
-
+  private users: User[] = this.getUsersFromLocalStorage();
   constructor() {}
 
   // Function to get the list of users from local storage
@@ -26,13 +26,10 @@ export class UserService {
     return of(users);
   }
 
-  deleteUser(username: string): Observable<void> {
-    // Implement the logic to delete a user with the given username
-    // For simplicity, we'll just remove the user from the local storage array
-    const users = this.getUsersFromLocalStorage();
-    const updatedUsers = users.filter((user) => user.username !== username);
-    this.saveUsersToLocalStorage(updatedUsers);
-    return of(undefined); // Return an observable with undefined value to indicate success
+  deleteUser(username: string): User[] {
+    this.users = this.users.filter((user) => user.username !== username);
+    this.saveUsersToLocalStorage(this.users);
+    return this.users;
   }
 
   saveUser(user: User): void {
@@ -42,14 +39,8 @@ export class UserService {
   }
   // Function to save an array of users to local storage
   saveUsers(users: User[]): void {
-    // Fetch existing users from local storage
-    const existingUsers = this.getUsersFromLocalStorage();
-
-    // Combine existing users with new users to create the updated list
-    const updatedUsers = [...existingUsers, ...users];
-
-    // Save the updated list to local storage
-    this.saveUsersToLocalStorage(updatedUsers);
+    this.users = users;
+    this.saveUsersToLocalStorage(this.users);
   }
 
 }
