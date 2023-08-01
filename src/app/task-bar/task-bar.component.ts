@@ -41,7 +41,7 @@ export class TaskBarComponent implements OnInit {
     this.router.navigate(['/viewSlides']);
   }
   experimentUsers(): void{
-    this.router.navigate(['/configuration']);
+    this.router.navigate(['/viewExperimentUsers']);
   }
   viewLogs(): void{
     this.router.navigate(['/configuration']);

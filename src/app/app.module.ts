@@ -11,6 +11,7 @@ import { TaskBarComponent } from './task-bar/task-bar.component';
 import { ConfigurationComponent } from './configuration/configuration.component';
 import { ExperimentSlidesComponent } from './experiment-slides/experiment-slides.component';
 import { UserPageComponent } from './user-page/user-page.component';
+import { ExperimentUsersComponent } from './experiment-users/experiment-users.component';
 
 
 
@@ -26,6 +27,7 @@ import { UserPageComponent } from './user-page/user-page.component';
     ExperimentSlidesComponent,
     UserPageComponent,
     ExperimentSlidesComponent,
+    ExperimentUsersComponent,
   ],
   imports: [
     BrowserModule,

@@ -32,11 +32,20 @@ export class UserService {
     return this.users;
   }
 
-  saveUser(user: User): void {
-    const users = this.getUsersFromLocalStorage();
-    users.push(user);
-    this.saveUsersToLocalStorage(users);
+  // Inside the saveUser method in the UserService
+saveUser(user: User): void {
+  // Find the index of the user in the users array
+  const userIndex = this.users.findIndex((u) => u.id === user.id);
+
+  if (userIndex !== -1) {
+    // If the user exists in the users array, update the user object at the found index
+    this.users[userIndex] = user;
+  } else {
+    // If the user is not found in the users array, add the user to the array
+    this.users.push(user);
   }
+}
+
   // Function to save an array of users to local storage
   saveUsers(users: User[]): void {
     this.users = users;

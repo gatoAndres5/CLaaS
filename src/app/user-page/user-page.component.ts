@@ -70,6 +70,7 @@ export class UserPageComponent {
     // Call the user service to get the list of users
     this.userService.getUsers().subscribe((users: User[]) => {
       this.users = users;
+      console.log('Users fetched:',users);
     });
   }
 
@@ -94,10 +95,13 @@ export class UserPageComponent {
       console.log('Passwords do not match. Please re-enter the same password.');
       return;
     }
-  
+    const maxId = this.users.reduce((max, user) => (user.id > max ? user.id : max), 0);
+
+  // Assign new ids for the created users
+  let nextId = maxId + 1;
     // Create a new user object
     const newUser: User = {
-      id: this.users.length + 1, // You can use this logic to generate a unique ID for the new user
+      id: nextId++, // You can use this logic to generate a unique ID for the new user
       username: this.username,
       firstName: this.firstName,
       lastName: this.lastName,

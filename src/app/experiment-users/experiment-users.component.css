@@ -1,0 +1,69 @@
+.page-title {
+    margin-top: 100px;
+    margin-bottom: 30px;
+    margin-left: 10px;
+    font-size: 50px;
+    font-weight: normal;
+    font-family: Proxima Nova, sans-serif;
+    color: #AB0520;
+  }
+  .content-container {
+    display: flex;
+    flex-direction: column;
+    margin-left: 50px;
+    text-align: left;
+  }
+  
+  .content-title {
+    margin-top: 20px;
+    font-size: 16px;
+    font-weight: normal;
+    font-family: Proxima Nova, sans-serif;
+    align-items: left;
+  }
+  /* Create a grid container for experiments */
+.experiment-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px; /* Adjust the gap between experiments as needed */
+  }
+  
+  /* Style each experiment */
+  .experiment-item {
+    
+    padding: 10px;
+    flex: 1 0 250px; /* Adjust the width of each experiment item as needed */
+    color: #363636;
+    font-family: Proxima Nova, sans-serif;
+    font-size: 16px;
+    font-weight: normal;
+  }
+  
+  .user-item{
+    
+    padding: 10px;
+    flex: 1 0 250px; /* Adjust the width of each experiment item as needed */
+    color: #363636;
+    font-family: Proxima Nova, sans-serif;
+    font-size: 14px;
+    font-weight: normal;
+  }
+  
+  
+  
+  
+  
+  
+  
+  button[type="submit"] {
+    background-color: #AB0520;
+    color: white;
+    font-family: Proxima Nova, sans-serif;
+    font-size: 13px;
+    font-weight: normal;
+    align-self: flex-start; /* Align the button to the left */
+    padding:10px 14px;
+    margin-bottom: 30px;
+    margin-top: 15px;
+    
+  }

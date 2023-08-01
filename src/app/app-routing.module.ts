@@ -6,6 +6,7 @@ import { UserAgreementComponent } from './user-agreement/user-agreement.componen
 import { ConfigurationComponent } from './configuration/configuration.component';
 import { ExperimentSlidesComponent } from './experiment-slides/experiment-slides.component';
 import { UserPageComponent } from './user-page/user-page.component';
+import { ExperimentUsersComponent } from './experiment-users/experiment-users.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/login', pathMatch: 'full' },
@@ -13,8 +14,9 @@ const routes: Routes = [
   { path: 'home', component: HomeComponent},
   { path: 'user-agreement', component: UserAgreementComponent},
   { path: 'configuration', component: ConfigurationComponent},
-  {path: 'viewSlides',component:ExperimentSlidesComponent},
-  {path:'viewUsers',component:UserPageComponent},
+  { path: 'viewSlides',component:ExperimentSlidesComponent},
+  { path:'viewUsers',component:UserPageComponent},
+  { path: 'viewExperimentUsers',component:ExperimentUsersComponent}
   // Other routes for your application
 ];
 
