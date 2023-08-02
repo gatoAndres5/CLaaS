@@ -8,11 +8,20 @@
         students, and trainees will be able to see clearly how cyberattacks are launched, and the vulnerabilities that are exploited. (Read More...)
       </p>
     </div>
-    <hr class="divider">
-    <h3 class ="left-heading2">Available Experiments</h3>
-    <hr class="divider">
+    <div class="page-container">
+      <!-- ... Existing content ... -->
     
-</div>
+      <hr class="divider">
+      <h3 class="left-heading2">Available Experiments</h3>
+      <hr class="divider">
+    
+      <div class="available-experiments">
+        <div *ngFor="let experimentName of getAvailableExperimentNames()" class="experiment-item">
+          <span>{{ experimentName }}</span>
+        </div>
+      </div>
+    </div>
+    
   
   
   

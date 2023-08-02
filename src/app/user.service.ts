@@ -8,6 +8,7 @@ import { User } from './user.model';
 export class UserService {
   private localStorageKey = 'users'; // Key to store users in local storage
   private users: User[] = this.getUsersFromLocalStorage();
+  private loggedInUser: User | null = null;
   constructor() {}
 
   // Function to get the list of users from local storage
@@ -44,6 +45,7 @@ saveUser(user: User): void {
     // If the user is not found in the users array, add the user to the array
     this.users.push(user);
   }
+  this.saveUsersToLocalStorage(this.users);
 }
 
   // Function to save an array of users to local storage
@@ -51,7 +53,27 @@ saveUser(user: User): void {
     this.users = users;
     this.saveUsersToLocalStorage(this.users);
   }
+  // Function to authenticate a user based on the provided username and password
+  authenticateUser(username: string, password: string): User | null {
+    // Find the user with the matching username
+    const user = this.users.find((user) => user.username === username);
 
+    if (user && user.password === password) {
+      // If the user is found and the password matches, return the user
+      this.loggedInUser = user;
+      return user;
+    }
+
+    // If no user is found or the password doesn't match, return null
+    return null;
+  }
+  getLoggedInUser(): Observable<User | null> {
+    // Return the currently logged-in user as an observable
+    return of(this.loggedInUser);
+  }
+  logout(): void{
+    this.loggedInUser = null;
+  }
 }
 
 
