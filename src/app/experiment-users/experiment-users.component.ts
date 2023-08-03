@@ -46,6 +46,8 @@ export class ExperimentUsersComponent implements OnInit {
   }
 
   toggleUserInExperiment(user: User, experiment: Experiment) {
+    console.log(`Before toggle: User '${user.username}' experiments:`, user.experiments);
+    
     if (this.isUserInExperiment(user, experiment)) {
       // If the user is associated with the experiment, remove the experiment name from the user's experiments array
       user.experiments = user.experiments.filter(expName => expName !== experiment.name);
@@ -54,11 +56,16 @@ export class ExperimentUsersComponent implements OnInit {
       user.experiments.push(experiment.name);
     }
   
-    // Update the experiments array of the corresponding user
-    this.updateUserExperiments(user);
+    console.log(`After toggle: User '${user.username}' experiments:`, user.experiments);
+  
+    // Save the updated user data using the user service
+    this.userService.saveUser(user);
   }
+  
 
   updateUserExperiments(user: User): void {
+    console.log(`Before update: User '${user.username}' experiments:`, user.experiments);
+  
     // Find the selected experiments based on their names
     const selectedExperiments = this.experiments.filter(experiment =>
       this.isUserInExperiment(user, experiment)
@@ -66,7 +73,11 @@ export class ExperimentUsersComponent implements OnInit {
   
     // Update the user's experiments array with the selected experiment names
     user.experiments = selectedExperiments.map(experiment => experiment.name);
+    
+  
+    console.log(`After update: User '${user.username}' experiments:`, user.experiments);
   }
+  
   updateExperimentUsers(experiment: Experiment) {
     // Filter the users based on the selected experiment
     const selectedUsers = this.users.filter((user) =>
@@ -75,9 +86,12 @@ export class ExperimentUsersComponent implements OnInit {
   
     // Update the selected users with the experiment
     for (const user of selectedUsers) {
-      user.experiments = [experiment.name]; // Assign the user to only the selected experiment
-      this.userService.saveUser(user);
-      console.log(`User '${user.username}' updated for experiment '${experiment.name}'`);
+      // Add the selected experiment to the user's experiments array if it's not already there
+      if (!user.experiments.includes(experiment.name)) {
+        user.experiments.push(experiment.name);
+        this.userService.saveUser(user);
+        console.log(`User '${user.username}' updated for experiment '${experiment.name}'`);
+      }
     }
   
     // Print the updated users array after updating the experiment users
@@ -85,6 +99,7 @@ export class ExperimentUsersComponent implements OnInit {
   
     console.log(`Experiment users for '${experiment.name}' updated successfully!`);
   }
+  
 }
 
 

@@ -34,9 +34,10 @@ export class LoginComponent {
       // Redirect to the home page or any other desired route
       this.router.navigate(['/user-agreement']);
     } 
-    else if(this.username === "a" && this.password === "p"){
+    else if(this.username === "a" && this.password === "p"){ //delete this later
       console.log('Admin login successful!');
-      this.userRoleService.userRole = "Administrator";
+      this.userRoleService.userRole = "Administrator"; 
+      this.router.navigate(['/user-agreement']);
     }
     else {
       console.log('Invalid username or password!');

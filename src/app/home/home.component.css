@@ -37,4 +37,28 @@
     color: #363636;
     margin-bottom: 50px;
   }
-  
+  .Experiment-Image{
+    margin-left: 130px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+  }
+  .experiment-details{
+    margin-left: 290px;
+    margin-top: -130px;
+    margin-bottom: 40px;
+  }
+  .experimentName{
+    text-align: left;
+    font-family: Proxima Nova, sans-serif; /* Specify the desired font family */
+    font-size: 24px; /* Specify the desired font size */
+    font-weight: normal; /* Specify the desired font weight */
+    color: #AB0520;
+  }
+  .experimentDetail{
+    text-align: left;
+    font-family: Proxima Nova, sans-serif; /* Specify the desired font family */
+    font-size: 18px; /* Specify the desired font size */
+    font-weight: normal; /* Specify the desired font weight */
+    margin-top: -15px;
+    color: #363636;
+  }

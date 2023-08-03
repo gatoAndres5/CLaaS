@@ -17,9 +17,19 @@
     
       <div class="available-experiments">
         <div *ngFor="let experimentName of getAvailableExperimentNames()" class="experiment-item">
-          <span>{{ experimentName }}</span>
+          <div class="experiment-info">
+            <!-- Add your image here. Replace 'image-url.png' with the actual URL or image path -->
+            <img src="assets/experimentLogo.png" alt="Experiment Image" class="Experiment-Image">
+            <div class="experiment-details">
+              <h4 class="experimentName">{{ experimentName }} </h4>
+              <p class="experimentDetail">{{ getExperimentDescription(experimentName) }}</p>
+            </div>
+            <hr class="divider">
+          </div>
         </div>
       </div>
+      
+      
     </div>
     
   
