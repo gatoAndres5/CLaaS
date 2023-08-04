@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { AfterViewChecked, Component, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { ExperimentService } from '../experiment.service';
 import { Experiment } from '../experiment.model';
 import { UserRoleService } from '../user-role.service';
@@ -15,7 +15,7 @@ import { User } from '../user.model';
 export class HomeComponent implements OnInit {
   experiments: Experiment[] = [];
   userRole: string = '';
-  loggedInUser: User | undefined;
+  loggedInUser: User | null = null;
   availableExperiments: string[] = [];
 
   constructor(
@@ -30,30 +30,28 @@ export class HomeComponent implements OnInit {
     this.userRole = this.userRoleService.userRole; // Get the user role from the service
     this.fetchExperiments();
     this.fetchLoggedInUser();
+    console.log("Logged In User:", this.loggedInUser);
     
   }
-  ngAfterViewChecked(): void {
-    this.fetchLoggedInUser();
-  }
+  
 
   fetchExperiments() {
     this.experimentService.getExperiments().subscribe((experiments: Experiment[]) => {
       this.experiments = experiments;
-      console.log('Experiments fetched:', experiments);
+      //console.log('Experiments fetched:', experiments);
 
     });
   }
 
   fetchLoggedInUser() {
     // Assuming the UserService has a method to fetch the currently logged-in user
-    this.userService.getLoggedInUser().subscribe((user: User | null) => {
-      this.loggedInUser = user || undefined;
-      this.updateAvailableExperiments();
-      console.log("Logged In User:",this.loggedInUser);
-    });
-
+    this.loggedInUser = this.userService.getLoggedInUser();
+    this.updateAvailableExperiments();
+    console.log('Updated loggedInUser in HomeComponent:', this.loggedInUser);
+    this.userService.updateLoggedInUser(this.loggedInUser!);
   }
   updateAvailableExperiments() {
+    //console.log("Logged In User:",this.loggedInUser);
     if (this.loggedInUser) {
       // Filter the experiments based on the user's experiments array
       const availableExperiments = this.experiments.filter((experiment) =>
@@ -71,7 +69,7 @@ export class HomeComponent implements OnInit {
       const availableExperiments = this.experiments.filter((experiment) =>
         this.loggedInUser?.experiments.includes(experiment.name)
       );
-      console.log('Available experiments:', availableExperiments);
+      //console.log('Available experiments:', availableExperiments);
       return availableExperiments.map((experiment) => experiment.name);
     } else {
       return [];

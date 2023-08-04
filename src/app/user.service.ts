@@ -67,13 +67,17 @@ saveUser(user: User): void {
     // If no user is found or the password doesn't match, return null
     return null;
   }
-  getLoggedInUser(): Observable<User | null> {
-    // Return the currently logged-in user as an observable
-    return of(this.loggedInUser);
-  }
+  
   logout(): void{
     this.loggedInUser = null;
   }
+  getLoggedInUser(): User | null {
+    return this.loggedInUser;
+  }
+  updateLoggedInUser(user: User): void {
+    this.loggedInUser = user;
+  }
+  
 }
 
 

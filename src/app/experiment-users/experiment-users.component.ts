@@ -46,36 +46,25 @@ export class ExperimentUsersComponent implements OnInit {
   }
 
   toggleUserInExperiment(user: User, experiment: Experiment) {
-    console.log(`Before toggle: User '${user.username}' experiments:`, user.experiments);
-    
     if (this.isUserInExperiment(user, experiment)) {
       // If the user is associated with the experiment, remove the experiment name from the user's experiments array
-      user.experiments = user.experiments.filter(expName => expName !== experiment.name);
+      user.experiments = user.experiments.filter((expName) => expName !== experiment.name);
     } else {
       // If the user is not associated with the experiment, add the experiment name to the user's experiments array
-      user.experiments.push(experiment.name);
+      if (!user.experiments.includes(experiment.name)) {
+        user.experiments.push(experiment.name);
+      }
     }
-  
-    console.log(`After toggle: User '${user.username}' experiments:`, user.experiments);
-  
-    // Save the updated user data using the user service
-    this.userService.saveUser(user);
+
+    // Update the experiments array of the corresponding user
+    this.updateUserExperiments(user);
   }
   
 
   updateUserExperiments(user: User): void {
-    console.log(`Before update: User '${user.username}' experiments:`, user.experiments);
-  
-    // Find the selected experiments based on their names
-    const selectedExperiments = this.experiments.filter(experiment =>
-      this.isUserInExperiment(user, experiment)
-    );
-  
-    // Update the user's experiments array with the selected experiment names
-    user.experiments = selectedExperiments.map(experiment => experiment.name);
-    
-  
-    console.log(`After update: User '${user.username}' experiments:`, user.experiments);
+    // Save the user's experiments to the local storage
+    this.userService.saveUser(user);
+    console.log("Updated user:",user);
   }
   
   updateExperimentUsers(experiment: Experiment) {
@@ -94,11 +83,34 @@ export class ExperimentUsersComponent implements OnInit {
       }
     }
   
+    // Get the updated experiment names from the users array
+    const updatedExperimentNames = new Set<string>();
+    for (const user of this.users.filter((user) => this.isUserInExperiment(user, experiment))) {
+      for (const experimentName of user.experiments) {
+        updatedExperimentNames.add(experimentName);
+      }
+    }
+  
+    // Update the experiments for the loggedInUser
+    const loggedInUser = this.userService.getLoggedInUser();
+    if (loggedInUser) {
+      // Find the user with the same username as loggedInUser in the users array
+      const userWithSameUsername = this.users.find(user => user.username === loggedInUser.username);
+      
+      if (userWithSameUsername) {
+        // Update the experiments array of loggedInUser with the experiments array of userWithSameUsername
+        loggedInUser.experiments = userWithSameUsername.experiments;
+        this.userService.updateLoggedInUser(loggedInUser);
+      }
+    }
+  
     // Print the updated users array after updating the experiment users
     console.log('Updated users array:', this.users);
-  
-    console.log(`Experiment users for '${experiment.name}' updated successfully!`);
+    console.log('Updated loggedInUser in UserService:', loggedInUser);
   }
+  
+  
+  
   
 }
 

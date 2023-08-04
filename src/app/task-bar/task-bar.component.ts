@@ -26,16 +26,20 @@ export class TaskBarComponent implements OnInit {
     this.showTaskBar = this.router.url !== '/login';
   
     // Fetch the logged-in user from the UserService
-    this.userService.getLoggedInUser().subscribe((loggedInUser) => {
-      if (loggedInUser) {
-        // If the user is logged in, set the username variable to the username of the logged-in user
-        this.username = loggedInUser.username;
-      } else {
-        // If no user is logged in, set the username variable to an empty string
-        this.username = '';
-      }
-    });
+    const loggedInUser = this.userService.getLoggedInUser();
+    if (loggedInUser) {
+      // If the user is logged in, set the username variable to the username of the logged-in user
+      this.username = loggedInUser.username;
+    } else {
+      // If no user is logged in, set the username variable to an empty string
+      this.username = '';
+    }
   }
+  
+  
+  
+  
+  
   logout(): void {
     // Perform any necessary actions to log out the user
     // For example, clearing session storage, resetting user data, etc.
