@@ -17,7 +17,7 @@
     
       <div class="available-experiments">
         <div *ngFor="let experimentName of getAvailableExperimentNames()" class="experiment-item">
-          <div class="experiment-info">
+          <div class="experiment-info" (click) = "navigateToExperimentDetails(experimentName)">
             <!-- Add your image here. Replace 'image-url.png' with the actual URL or image path -->
             <img src="assets/experimentLogo.png" alt="Experiment Image" class="Experiment-Image">
             <div class="experiment-details">

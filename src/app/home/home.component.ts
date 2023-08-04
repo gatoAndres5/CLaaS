@@ -1,9 +1,10 @@
-import { AfterViewChecked, Component, OnChanges, OnInit, SimpleChanges } from '@angular/core';
+import { Component, OnInit,  } from '@angular/core';
 import { ExperimentService } from '../experiment.service';
 import { Experiment } from '../experiment.model';
 import { UserRoleService } from '../user-role.service';
 import { UserService } from '../user.service';
 import { User } from '../user.model';
+import { Router } from '@angular/router';
 
 
 
@@ -22,6 +23,7 @@ export class HomeComponent implements OnInit {
     private experimentService: ExperimentService,
     private userRoleService: UserRoleService,
     private userService: UserService,
+    private router: Router
     
   ) {} 
   
@@ -79,7 +81,10 @@ export class HomeComponent implements OnInit {
     const experiment = this.experiments.find((exp) => exp.name === experimentName);
     return experiment ? experiment.description : undefined;
   }
-  
+  navigateToExperimentDetails(experimentName: string): void {
+    // Assuming you have a route named 'experimentVM' for showing experiment details in experiment-display.html
+    this.router.navigate(['/experimentVM'], { queryParams: { name: experimentName } });
+  }
 }
 
 

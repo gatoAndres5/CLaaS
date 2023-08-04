@@ -12,6 +12,7 @@ import { ConfigurationComponent } from './configuration/configuration.component'
 import { ExperimentSlidesComponent } from './experiment-slides/experiment-slides.component';
 import { UserPageComponent } from './user-page/user-page.component';
 import { ExperimentUsersComponent } from './experiment-users/experiment-users.component';
+import { ExperimentDisplayComponent } from './experiment-display/experiment-display.component';
 
 
 
@@ -28,6 +29,7 @@ import { ExperimentUsersComponent } from './experiment-users/experiment-users.co
     UserPageComponent,
     ExperimentSlidesComponent,
     ExperimentUsersComponent,
+    ExperimentDisplayComponent,
   ],
   imports: [
     BrowserModule,
