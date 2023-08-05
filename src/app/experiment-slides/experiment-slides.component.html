@@ -5,25 +5,25 @@
     <div class="centered-section">
         <div class="experiment-dropdown">
           <label for="experiment-select" class="sr-only">Experiment</label>
-          <select id="experiment-select" [(ngModel)]="selectedExperimentId">
-                    
-            <option *ngFor="let experiment of experiments" [value]="experiment.id">
+          <select id="experiment-select" [(ngModel)]="selectedExperimentName" (change)="onExperimentSelected()">
+            <option value="">Select an experiment</option>
+            <option *ngFor="let experiment of experiments" [value]="experiment.name">
               {{ experiment.name }}
             </option>
           </select>
+          
         </div>
       
-      
-      
-  
-      <div class="slides-section">
-        <div class="file-upload-container">
-          <label for="file-upload">Slides</label>
-          <input type="file" id="file-upload" accept=".pdf,.ppt,.pptx" />
-          <!-- Additional elements for handling the uploaded file -->
-        </div>
-      </div>
-      <button type="submit" >Upload</button>
+        <form (submit)="onUploadFormSubmit($event)">
+          <div class="slides-section">
+            <div class="file-upload-container">
+              <label for="file-upload">Slides</label>
+              <input type="file" id="file-upload" accept=".pdf,.ppt,.pptx" (change)="onFileSelected($event)" />
+              <!-- Additional elements for handling the uploaded file -->
+            </div>
+          </div>
+          <button type="submit">Upload</button>
+        </form>
     </div>
     
   </div>

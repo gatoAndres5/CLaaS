@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Observable, of } from 'rxjs';
+import { Observable, of, throwError } from 'rxjs';
 import { Experiment } from './experiment.model';
 
 @Injectable({
@@ -46,6 +46,23 @@ export class ExperimentService {
     const maxId = this.experiments.reduce((max, experiment) => Math.max(max, experiment.id), 0);
     return maxId + 1;
   }
+  uploadFileForExperiment(experimentName: string, file: File): void {
+    const formData = new FormData();
+    formData.append('experimentName', experimentName);
+    formData.append('file', file);
+  
+    // After successful upload, update the experiment's slides property with the file's unique identifier
+    const experimentToUpdate = this.experiments.find((exp) => exp.name === experimentName);
+    if (experimentToUpdate) {
+      experimentToUpdate.slides = file.name; // Use the file name as the unique identifier
+      this.saveToLocalStorage(); // Save the updated experiment to local storage
+      console.log("Success uploading file");
+    } else {
+      console.log("Error uploading file: Experiment not found");
+    }
+  }
+  
+  
 }
 
 

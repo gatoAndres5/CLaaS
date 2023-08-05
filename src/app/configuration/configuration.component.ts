@@ -165,7 +165,8 @@ export class ConfigurationComponent implements OnInit {
       description: this.experimentDescription,
       enabled: false,
       addedOn: new Date(),
-      lastModified: new Date()
+      lastModified: new Date(),
+      slides: ""
     };
 
     this.experimentService.addExperiment(newExperiment).subscribe((addedExperiment: Experiment) => {

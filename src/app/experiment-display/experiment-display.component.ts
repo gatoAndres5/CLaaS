@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-
+ // Import the SlidePopupComponent
 
 @Component({
   selector: 'app-experiment-display',
@@ -18,5 +18,6 @@ export class ExperimentDisplayComponent {
       console.log('Experiment Name:', experimentName);
     });
   }
+  
   
 }

@@ -17,6 +17,7 @@ import { ExperimentDisplayComponent } from './experiment-display/experiment-disp
 
 
 
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -30,6 +31,7 @@ import { ExperimentDisplayComponent } from './experiment-display/experiment-disp
     ExperimentSlidesComponent,
     ExperimentUsersComponent,
     ExperimentDisplayComponent,
+    
   ],
   imports: [
     BrowserModule,
