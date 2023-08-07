@@ -13,6 +13,11 @@ import { ExperimentSlidesComponent } from './experiment-slides/experiment-slides
 import { UserPageComponent } from './user-page/user-page.component';
 import { ExperimentUsersComponent } from './experiment-users/experiment-users.component';
 import { ExperimentDisplayComponent } from './experiment-display/experiment-display.component';
+import { ExperimentInstructionsDialogComponent } from './experiment-instructions-dialog/experiment-instructions-dialog.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MatDialogModule } from '@angular/material/dialog'; // Import MatDialogModule
+import { NgxExtendedPdfViewerComponent } from 'ngx-extended-pdf-viewer';
+
 
 
 
@@ -31,12 +36,15 @@ import { ExperimentDisplayComponent } from './experiment-display/experiment-disp
     ExperimentSlidesComponent,
     ExperimentUsersComponent,
     ExperimentDisplayComponent,
+    ExperimentInstructionsDialogComponent,
     
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
-    FormsModule
+    FormsModule,
+    BrowserAnimationsModule,
+    MatDialogModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

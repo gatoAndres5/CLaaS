@@ -6,6 +6,6 @@ export interface Experiment {
     enabled: boolean;
     addedOn: Date;
     lastModified: Date;
-    slides: string;
+    slides: File|null;
   }
   

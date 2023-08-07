@@ -51,16 +51,41 @@ export class ExperimentService {
     formData.append('experimentName', experimentName);
     formData.append('file', file);
   
-    // After successful upload, update the experiment's slides property with the file's unique identifier
+    // After successful upload, update the experiment's slides property with the File object
     const experimentToUpdate = this.experiments.find((exp) => exp.name === experimentName);
     if (experimentToUpdate) {
-      experimentToUpdate.slides = file.name; // Use the file name as the unique identifier
+      experimentToUpdate.slides = file;
       this.saveToLocalStorage(); // Save the updated experiment to local storage
       console.log("Success uploading file");
     } else {
       console.log("Error uploading file: Experiment not found");
     }
   }
+  convertFileToDataUrl(file: File): Promise<string> {
+    return new Promise((resolve, reject) => {
+      const fileReader = new FileReader();
+  
+      fileReader.onload = (event: any) => {
+        const dataUrl = event.target.result;
+        resolve(dataUrl);
+      };
+  
+      fileReader.onerror = (event) => {
+        reject(event.target?.error);
+      };
+  
+      // Add error handling for invalid file
+      if (!file || !(file instanceof Blob)) {
+        reject(new Error('Invalid file'));
+        return;
+      }
+  
+      fileReader.readAsDataURL(file);
+    });
+  }
+  
+  
+  
   
   
 }

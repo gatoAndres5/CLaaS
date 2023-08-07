@@ -40,8 +40,9 @@ export class ExperimentSlidesComponent {
   
     // Call the method in the ExperimentService to associate the file with the selected experiment
     this.experimentService.uploadFileForExperiment(this.selectedExperimentName, this.selectedFile);
-    console.log("Updated experiments array:",this.experiments);
+    console.log("Updated experiments array:", this.experiments);
   }
+  
   
   
 
