@@ -1,1 +1,10 @@
-<p>experiment-instructions-dialog works!</p>
+<h2 class='mat-dialog-title'>{{ data.experimentName }}</h2>
+<div class='mat-dialog-content'>
+  <!-- Add your experiment instructions content here -->
+  <iframe class='iframe'[src]="data.embedUrl" width=200px height="200px"></iframe>
+  
+<div>
+<div class='mat-dialog-actions'>
+  <button type='submit'>Close</button>
+<div>
+

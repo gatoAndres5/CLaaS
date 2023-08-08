@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { MatDialog,MatDialogRef } from '@angular/material/dialog';
+import { MatDialog,MatDialogConfig} from '@angular/material/dialog';
 import { ExperimentInstructionsDialogComponent } from '../experiment-instructions-dialog/experiment-instructions-dialog.component';
 import { ExperimentService } from '../experiment.service';
 import { Experiment } from '../experiment.model';
@@ -39,17 +39,20 @@ export class ExperimentDisplayComponent {
     this.showExperimentSlides = !this.showExperimentSlides;
   
     if (this.showExperimentSlides && this.fileName) {
-      // Assuming you have a property `selectedExperiment` containing the current experiment object
-      
-        // Open the dialog to display the experiment instructions
-        const dialogRef = this.dialog.open(ExperimentInstructionsDialogComponent, {
-          data: {
-            experimentName: this.experiment?.name,
-            instructions: this.experiment?.description,
-            fileName: this.fileName,
-          },
-          width: '80%', // Set the width of the dialog as desired
-        });
+      const dialogConfig = new MatDialogConfig();
+      dialogConfig.data = {
+        experimentName: this.experiment?.name,
+        instructions: this.experiment?.description,
+        fileName: this.fileName,
+      };
+      dialogConfig.width = '500px';
+      dialogConfig.position = {
+        top: '350px', // Position at the top of the screen
+        left: '20px', // Position at the right side of the screen
+      };
+      dialogConfig.hasBackdrop = false;
+  
+      const dialogRef = this.dialog.open(ExperimentInstructionsDialogComponent, dialogConfig);
   
         dialogRef.afterClosed().subscribe(() => {
           // Handle any actions after the dialog is closed (if needed)

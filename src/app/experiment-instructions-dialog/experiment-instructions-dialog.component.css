@@ -1,0 +1,48 @@
+.mat-dialog-title {
+    background-color: #ffffff;
+    color: rgb(49, 49, 49);
+    border-bottom: 2px solid #ffffff;
+    width: 500px;
+    font-weight: normal;
+    font-family: Proxima Nova, sans-serif;
+    margin-bottom: -10px;
+    font-size: 28px;
+  }
+  
+  /* Modify the background and border colors for the dialog content */
+  .mat-dialog-content {
+    background-color: #ffffff;
+    padding: 20px;
+    border-bottom: 1px solid #912d2d;
+    width: 500px;
+  }
+  
+  /* Modify the background color for the dialog actions */
+  .mat-dialog-actions {
+    background-color: #ffffff;
+    padding: 10px;
+    border-top: 1px solid #ccc;
+    width: 500px; /* Set the desired width for the actions */
+  }
+  
+  /* Set the width for the iframe */
+  .iframe {
+    background-color: #ffffff;
+    padding: 10px;
+    border-top: 1px solid #ffffff;
+    border: 2px solid #ffffff;
+    width: 500px; /* Set the desired width for the iframe */
+  }
+  
+  button[type="submit"] {
+    background-color: #AB0520;
+    color: white;
+    font-family: Proxima Nova, sans-serif;
+    font-size: 15px;
+    font-weight: normal;
+    align-self: flex-start;
+    padding: 8px 12px;
+    margin-bottom: 2px;
+    margin-top: 2px;
+  }
+  

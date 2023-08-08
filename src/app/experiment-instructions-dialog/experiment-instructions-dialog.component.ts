@@ -4,18 +4,12 @@ import { ExperimentService } from '../experiment.service';
 
 
 @Component({
-  selector: 'app-experiment-instructions-dialog',
-  template: `
-    <h2 mat-dialog-title>{{ data.experimentName }}</h2>
-    <mat-dialog-content>
-      <!-- Add your experiment instructions content here -->
-      
-      <iframe [src]="data.embedUrl" width="100%" height="500px"></iframe>
-    </mat-dialog-content>
-    <mat-dialog-actions>
-      <button mat-button mat-dialog-close>Close</button>
-    </mat-dialog-actions>
-  `,
+  
+    selector: 'app-experiment-instructions-dialog',
+    templateUrl: './experiment-instructions-dialog.component.html', // Path to the external HTML file
+    styleUrls: ['./experiment-instructions-dialog.component.css']
+  
+  
 })
 export class ExperimentInstructionsDialogComponent {
   constructor(
