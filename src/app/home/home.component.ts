@@ -18,6 +18,7 @@ export class HomeComponent implements OnInit {
   userRole: string = '';
   loggedInUser: User | null = null;
   availableExperiments: string[] = [];
+  
 
   constructor(
     private experimentService: ExperimentService,

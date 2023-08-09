@@ -22,10 +22,22 @@
           
         </div>
       </ng-container>
+      <ng-container *ngIf="userRole === 'Professor'">
+        <div class="dropdown">
+          <button class="dropdown-button">Professor˅</button>
+          <div class="dropdown-content">
+            <button (click)="configure()">Configuration</button>
+            <button (click)="viewUsers()">Users</button>
+            <button (click)="viewSlides()">Slides</button>
+            <button (click)="experimentUsers()">Experiment Users</button>
+          </div>
+          
+        </div>
+      </ng-container>
       <div class="dropdown">
         <button class="dropdown-button">Account˅</button>
         <div class="dropdown-content">
-          <a href="#">Change Password</a>
+          <button (click)=changePassword()>Change Password</button>
           <button (click)="logout()">Log out</button>
         </div>
       </div>

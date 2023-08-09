@@ -17,6 +17,7 @@ import { ExperimentInstructionsDialogComponent } from './experiment-instructions
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatDialogModule } from '@angular/material/dialog'; // Import MatDialogModule
 import { NgxExtendedPdfViewerComponent } from 'ngx-extended-pdf-viewer';
+import { ChangePasswordComponent } from './change-password/change-password.component';
 
 
 
@@ -37,6 +38,7 @@ import { NgxExtendedPdfViewerComponent } from 'ngx-extended-pdf-viewer';
     ExperimentUsersComponent,
     ExperimentDisplayComponent,
     ExperimentInstructionsDialogComponent,
+    ChangePasswordComponent,
     
   ],
   imports: [

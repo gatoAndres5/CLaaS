@@ -50,6 +50,9 @@ export class TaskBarComponent implements OnInit {
     this.router.navigate(['/login']); // Redirect to the login screen
     
   }
+  changePassword(): void{
+    this.router.navigate(['/change-password']);
+  }
   configure(): void{
     this.router.navigate(['/configuration']);
   }
