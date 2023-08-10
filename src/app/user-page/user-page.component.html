@@ -38,11 +38,6 @@
 </div>
 
     <button type="submitLeft" (click)="addUser()">Add User</button>
-
-
-
-
-   
     
   </div>
   <hr class="divider">
@@ -66,6 +61,46 @@
 
 
 
+<div *ngIf="showEditUserForm">
+  <!-- Add your new user form here -->
+  <h2 class='content-title'>Edit User</h2>
+  <hr class="divider">
+  <div class="input-container">
+  <div class="form-group">
+    <label for="username">Username</label>
+    <input type="text" id="username" name="username" [(ngModel)]="editedUser!.username" required class="input-long">
+    <label for="username">First Name</label>
+    <input type="text" id="firstName" name="username" [(ngModel)]="editedUser!.firstName" required class="input-long">
+    <label for="username">Last Name</label>
+    <input type="text" id="username" name="username" [(ngModel)]="editedUser!.lastName" required class="input-long">
+    <label for="username">E-mail Address</label>
+    <input type="text" id="username" name="username" [(ngModel)]="editedUser!.email" required class="input-long">
+    <label for="username">Password</label>
+    <input type="text" id="username" name="username" [(ngModel)]="editedUser!.password" required class="input-long">
+    <label for="username">Re-enter New Password</label>
+    <input type="text" id="username" name="username" [(ngModel)]="editedUser!.rePassword" required class="input-long">
+    <label for="accountType">Account Type</label>
+<div class="experiment-dropdown">
+  <select id="accountType" [(ngModel)]="selectedAccountType">
+    <option value="Student">Student</option>
+    <option value="Professor">Professor</option>
+    <option value="Administrator">Administrator</option>
+  </select>
+</div>
+    <label for="experiments">Choose the experiments this user shall have access to</label>
+<div class="experiment-checkbox-list">
+  <div *ngFor="let experiment of userExperiments" class="experiment-checkbox-item">
+    <input type="checkbox" [value]="experiment.id" [checked]="isSelected(experiment.name)" (change)="toggleExperimentSelection(experiment.name)">
+    <label>{{ experiment.name }}</label>
+  </div>
+</div>
+
+    <button type="submitLeft" (click)="addUser()">Add User</button>
+    
+  </div>
+  <hr class="divider">
+</div>
+</div>
 
 <h2 class='content-title'>Current Users</h2>
 <div *ngIf="users.length > -1">
@@ -95,7 +130,7 @@
     <span>{{ user.created | date:'medium' }}</span>
     <span>{{ user.lastModified | date:'medium' }}</span>
     <span>{{ user.regStatus }}</span>
-    <span><button type="submit" (click)="setUsers(user.username)">Edit</button></span>
+    <span><button type="submit" (click)="editUsers(user.username)">Edit</button></span>
     <span><button type="submit" (click)="deleteUser(user.username)">Delete</button></span>
   </div>
   <hr class="divider"> <!-- Add the <hr> tag here, it will be horizontal -->

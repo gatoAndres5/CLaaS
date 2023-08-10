@@ -1,0 +1,31 @@
+<h2 class="page-title">Modify Experiment Users</h2>
+    <hr class="divider">
+    <!-- Content Container -->
+<!-- experiment-users.component.html -->
+
+<!-- experiment-users.component.html -->
+
+<div class="content-container">
+    <!-- Title -->
+    <h2 class="content-title">Update User Experiment Mappings</h2>
+    <hr class="divider">
+  
+    <!-- List of Experiments using Flexbox grid -->
+    <div class="experiment-grid">
+      <div *ngFor="let experiment of loggedInUserAssignedExperiments()" class="experiment-item">
+        <h2>{{ experiment.name }}</h2>
+        <div *ngFor="let user of users" class="user-item">
+          <label *ngIf="user.accountType=== 'Student'">
+            <input
+              type="checkbox"
+              [checked]="isUserInExperiment(user, experiment)"
+              (change)="toggleUserInExperiment(user, experiment)"
+            />
+            {{ user.username }} 
+          </label>
+        </div>
+        <!-- Button for "Update Experiment Users" -->
+        <button type="submit" (click)="updateExperimentUsers(experiment)">Update Experiment Users</button>
+      </div>
+    </div>
+  </div>

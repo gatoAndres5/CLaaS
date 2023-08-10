@@ -71,4 +71,7 @@ export class TaskBarComponent implements OnInit {
   phpInfo(): void{
     this.router.navigate(['/configuration']);
   }
+  professorExperimentUsers(): void {
+    this.router.navigate(['/professor-modify-users']);
+  }
 }

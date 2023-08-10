@@ -16,6 +16,7 @@ import { User } from '../user.model';
 })
 export class UserPageComponent {
   showUserForm: boolean = false;
+  showEditUserForm: boolean = false;
   username: string = '';
   firstName: string = '';
   lastName: string = '';
@@ -26,7 +27,7 @@ export class UserPageComponent {
   name: string = '';
   ipAddress: string = '';
   selectedAccountType: string = '';
-  
+  editedUser: User | null = null;
   userExperiments: Experiment[] = [];
   users: User[] = [];
   selectedExperimentName: string[] = [];
@@ -34,9 +35,16 @@ export class UserPageComponent {
 
   constructor(private experimentService: ExperimentService,private userService: UserService) {}
 
-  setUsers(userID:string){
+  editUsers(username:string){
+       // Find the user based on the username
+  const userToEdit = this.users.find(user => user.username === username);
 
+  // If user is found, set the user data and show the edit user form
+  if (userToEdit) {
+    this.editedUser = { ...userToEdit }; // Make a copy to not modify the original user directly
+    this.showEditUserForm = true;
   }
+}
   ngOnInit() {
     this.fetchExperiments();
     this.fetchUsers();
@@ -249,9 +257,6 @@ private mapAccountType(csvAccountType: string): string {
       return 'Unknown';
   }
 }
-
-
-
   
 }
 

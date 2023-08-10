@@ -9,6 +9,7 @@ import { UserPageComponent } from './user-page/user-page.component';
 import { ExperimentUsersComponent } from './experiment-users/experiment-users.component';
 import { ExperimentDisplayComponent } from './experiment-display/experiment-display.component';
 import { ChangePasswordComponent } from './change-password/change-password.component';
+import { ProfessorModifyUsersComponent } from './professor-modify-users/professor-modify-users.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/login', pathMatch: 'full' },
@@ -20,7 +21,8 @@ const routes: Routes = [
   { path:'viewUsers',component:UserPageComponent},
   { path: 'viewExperimentUsers',component:ExperimentUsersComponent},
   {path: 'experimentVM', component: ExperimentDisplayComponent},
-  {path: 'change-password', component: ChangePasswordComponent}
+  {path: 'change-password', component: ChangePasswordComponent},
+  {path: 'professor-modify-users', component: ProfessorModifyUsersComponent}
   // Other routes for your application
 ];
 
