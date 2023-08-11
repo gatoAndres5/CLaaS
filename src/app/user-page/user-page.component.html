@@ -67,6 +67,9 @@
   <hr class="divider">
   <div class="input-container">
   <div class="form-group">
+    <div *ngIf="existingUsername" class="error-message">
+      Username already exists. Please choose a different username.
+    </div>
     <label for="username">Username</label>
     <input type="text" id="username" name="username" [(ngModel)]="editedUser!.username" required class="input-long">
     <label for="username">First Name</label>
@@ -90,12 +93,12 @@
     <label for="experiments">Choose the experiments this user shall have access to</label>
 <div class="experiment-checkbox-list">
   <div *ngFor="let experiment of userExperiments" class="experiment-checkbox-item">
-    <input type="checkbox" [value]="experiment.id" [checked]="isSelected(experiment.name)" (change)="toggleExperimentSelection(experiment.name)">
+    <input type="checkbox" [value]="experiment.name" [checked]="isExperimentAssigned(experiment.name)" (change)="toggleExperimentSelection(experiment.name)">
     <label>{{ experiment.name }}</label>
   </div>
 </div>
 
-    <button type="submitLeft" (click)="addUser()">Add User</button>
+    <button type="submitLeft" (click)="saveEditedUser(editedUser!.username)">Save User</button>
     
   </div>
   <hr class="divider">

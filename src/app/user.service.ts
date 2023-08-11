@@ -77,6 +77,21 @@ saveUser(user: User): void {
   updateLoggedInUser(user: User): void {
     this.loggedInUser = user;
   }
+  updateUser(updatedUser: User): void {
+    const index = this.users.findIndex(user => user.id === updatedUser.id);
+
+    if (index !== -1) {
+      // Update the user in the array
+      this.users[index] = updatedUser;
+      localStorage.setItem('users',JSON.stringify(this.users));
+
+      // You might want to trigger any necessary actions or updates here
+
+      console.log('User updated:', updatedUser);
+    } else {
+      console.log('User not found:', updatedUser);
+    }
+  }
   
 }
 

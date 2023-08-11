@@ -32,7 +32,8 @@ export class UserPageComponent {
   users: User[] = [];
   selectedExperimentName: string[] = [];
   selectedFile: File |undefined ;
-
+  originalUsername: string | undefined;
+  existingUsername = false;
   constructor(private experimentService: ExperimentService,private userService: UserService) {}
 
   editUsers(username:string){
@@ -40,11 +41,49 @@ export class UserPageComponent {
   const userToEdit = this.users.find(user => user.username === username);
 
   // If user is found, set the user data and show the edit user form
-  if (userToEdit) {
+    if (userToEdit) {
+    this.originalUsername = userToEdit.username;
     this.editedUser = { ...userToEdit }; // Make a copy to not modify the original user directly
     this.showEditUserForm = true;
+    this.selectedAccountType = this.editedUser!.accountType;
+    }
   }
-}
+  isExperimentAssigned(experimentName: string): boolean {
+    return this.editedUser!.experiments.includes(experimentName);
+  }
+  saveEditedUser(username:string) {
+    // Update the user's experiments with the selected experiments
+    
+    const usernameExists = this.users.some(user => user.username === this.editedUser!.username && user.username !== this.originalUsername);
+   
+  if (usernameExists) {
+    console.log('Username already exists. Choose a different username.');
+    this.existingUsername = true;
+    return;
+  }
+  if (this.selectedExperimentsName.length > 0) {
+    this.editedUser!.experiments = this.selectedExperimentsName;
+  }
+    this.editedUser!.name = this.editedUser!.firstName + ' ' + this.editedUser!.lastName
+    // Update the user's information
+    this.editedUser!.accountType = this.selectedAccountType;
+    this.editedUser!.lastModified = new Date();
+  
+    // Assuming you have a service method to update the user
+    this.userService.updateUser(this.editedUser!);
+  
+    // Reset the form fields and selectedExperimentIds array
+    this.selectedExperimentsName = [];
+    this.selectedAccountType = '';
+  
+    // Hide the edit user form
+    this.showEditUserForm = false;
+    this.existingUsername = false;
+  
+    console.log('User updated:', this.editedUser);
+    this.fetchUsers();
+  }
+  
   ngOnInit() {
     this.fetchExperiments();
     this.fetchUsers();

@@ -162,3 +162,9 @@ input[type="password"] {
     margin-bottom: -10px;
     margin-top: -20px;
   }
+  .error-message{
+    font-size: 16px;
+    font-weight: normal;
+    font-family: Proxima Nova, sans-serif;
+    color: #363636;
+}
