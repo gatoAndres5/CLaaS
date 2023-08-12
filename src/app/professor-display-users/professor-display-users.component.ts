@@ -5,11 +5,11 @@ import { UserService } from '../user.service';
 import { User } from '../user.model';
 
 @Component({
-  selector: 'app-user-page',
-  templateUrl: './user-page.component.html',
-  styleUrls: ['./user-page.component.css']
+  selector: 'app-professor-display-users',
+  templateUrl: './professor-display-users.component.html',
+  styleUrls: ['./professor-display-users.component.css']
 })
-export class UserPageComponent {
+export class ProfessorDisplayUsersComponent {
   showUserForm: boolean = false;
   showEditUserForm: boolean = false;
   username: string = '';
@@ -29,6 +29,9 @@ export class UserPageComponent {
   selectedFile: File |undefined ;
   originalUsername: string | undefined;
   existingUsername = false;
+  loggedInUser: User  | null = null;
+  loggedInUserExperiments: string [] = [];
+  filteredUsers: User[] = [];
   constructor(private experimentService: ExperimentService,private userService: UserService) {}
 
   editUsers(username:string){
@@ -51,37 +54,54 @@ export class UserPageComponent {
     
     const usernameExists = this.users.some(user => user.username === this.editedUser!.username && user.username !== this.originalUsername);
    
-  if (usernameExists) {
-    console.log('Username already exists. Choose a different username.');
-    this.existingUsername = true;
-    return;
-  }
-  if (this.selectedExperimentsName.length > 0) {
-    this.editedUser!.experiments = this.selectedExperimentsName;
-  }
-    this.editedUser!.name = this.editedUser!.firstName + ' ' + this.editedUser!.lastName
+    if (usernameExists) {
+      console.log('Username already exists. Choose a different username.');
+      this.existingUsername = true;
+      return;
+    }
+    if (this.selectedExperimentsName.length > 0) {
+      this.editedUser!.experiments = this.selectedExperimentsName;
+    }
+      this.editedUser!.name = this.editedUser!.firstName + ' ' + this.editedUser!.lastName
     // Update the user's information
-    this.editedUser!.accountType = this.selectedAccountType;
-    this.editedUser!.lastModified = new Date();
+      this.editedUser!.accountType = this.selectedAccountType;
+      this.editedUser!.lastModified = new Date();
   
     // Assuming you have a service method to update the user
-    this.userService.updateUser(this.editedUser!);
+      this.userService.updateUser(this.editedUser!);
   
     // Reset the form fields and selectedExperimentIds array
-    this.selectedExperimentsName = [];
-    this.selectedAccountType = '';
+      this.selectedExperimentsName = [];
+      this.selectedAccountType = '';
   
     // Hide the edit user form
-    this.showEditUserForm = false;
-    this.existingUsername = false;
+      this.showEditUserForm = false;
+      this.existingUsername = false;
   
-    console.log('User updated:', this.editedUser);
-    this.fetchUsers();
-  }
+      console.log('User updated:', this.editedUser);
+      this.fetchUsers();
+    }
   
   ngOnInit() {
     this.fetchExperiments();
     this.fetchUsers();
+    this.loggedInUser = this.userService.getLoggedInUser();
+    this.loggedInUserExperiments = this.loggedInUser!.experiments || [];
+    if (this.loggedInUser) {
+      this.fetchUsersAssignedToLoggedInUserExperiments();
+    }
+  }
+  fetchUsersAssignedToLoggedInUserExperiments() {
+    // Fetch all users
+    console.log('Logged-in user experiments:', this.loggedInUserExperiments);
+    this.userService.getUsers().subscribe((users: User[]) => {
+      // Filter users who are assigned to the same experiments as the logged-in user
+      this.filteredUsers = users.filter(user =>
+        user.experiments.some(exp => this.loggedInUserExperiments.includes(exp)) &&
+        user.accountType !== 'Administrator'
+      );
+    });
+    console.log("filterered users: ",this.filteredUsers);
   }
   fetchExperiments() {
     this.experimentService.getExperiments().subscribe((experiments: Experiment[]) => {
@@ -292,5 +312,5 @@ private mapAccountType(csvAccountType: string): string {
   }
 }
   
-}
 
+}

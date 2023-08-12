@@ -74,4 +74,7 @@ export class TaskBarComponent implements OnInit {
   professorExperimentUsers(): void {
     this.router.navigate(['/professor-modify-users']);
   }
+  professorAddUsers(): void{
+    this.router.navigate(['/professor-add-users']);
+  }
 }

@@ -19,6 +19,7 @@ import { MatDialogModule } from '@angular/material/dialog'; // Import MatDialogM
 import { NgxExtendedPdfViewerComponent } from 'ngx-extended-pdf-viewer';
 import { ChangePasswordComponent } from './change-password/change-password.component';
 import { ProfessorModifyUsersComponent } from './professor-modify-users/professor-modify-users.component';
+import { ProfessorDisplayUsersComponent } from './professor-display-users/professor-display-users.component';
 
 
 
@@ -41,6 +42,7 @@ import { ProfessorModifyUsersComponent } from './professor-modify-users/professo
     ExperimentInstructionsDialogComponent,
     ChangePasswordComponent,
     ProfessorModifyUsersComponent,
+    ProfessorDisplayUsersComponent,
     
   ],
   imports: [
