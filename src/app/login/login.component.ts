@@ -14,12 +14,14 @@ export class LoginComponent {
   username: string = '';
   password: string = '';
   isLoggedOut: boolean = false;
+  incorrectLogin: boolean = false;
   constructor(private router: Router,private userRoleService: UserRoleService,private logoutService: LogoutService,private userService: UserService) { }
 
   ngOnInit(): void {
     this.logoutService.logoutStatus$.subscribe((loggedOut: boolean) => {
       this.isLoggedOut = loggedOut;
     });
+    this.incorrectLogin = false;
   }
   
   login(): void {
@@ -41,6 +43,7 @@ export class LoginComponent {
     }
     else {
       console.log('Invalid username or password!');
+      this.incorrectLogin = true;
       // Perform the desired actions for an invalid login, such as displaying an error message
     }
   }

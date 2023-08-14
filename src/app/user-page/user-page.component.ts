@@ -29,10 +29,17 @@ export class UserPageComponent {
   selectedFile: File |undefined ;
   originalUsername: string | undefined;
   existingUsername = false;
+  fillForm = false;
+  passwordMatch = false;
+  userAdded = false;
+  userEdited = false;
+  userDeleted = false;
+
   constructor(private experimentService: ExperimentService,private userService: UserService) {}
 
   editUsers(username:string){
        // Find the user based on the username
+  this.existingUsername = false;
   const userToEdit = this.users.find(user => user.username === username);
 
   // If user is found, set the user data and show the edit user form
@@ -48,7 +55,7 @@ export class UserPageComponent {
   }
   saveEditedUser(username:string) {
     // Update the user's experiments with the selected experiments
-    
+    this.userAdded = false;
     const usernameExists = this.users.some(user => user.username === this.editedUser!.username && user.username !== this.originalUsername);
    
   if (usernameExists) {
@@ -74,6 +81,7 @@ export class UserPageComponent {
     // Hide the edit user form
     this.showEditUserForm = false;
     this.existingUsername = false;
+    this.userEdited = true;
   
     console.log('User updated:', this.editedUser);
     this.fetchUsers();
@@ -82,6 +90,9 @@ export class UserPageComponent {
   ngOnInit() {
     this.fetchExperiments();
     this.fetchUsers();
+    this.userAdded = false;
+    this.userEdited = false;
+    this.userDeleted = false;
   }
   fetchExperiments() {
     this.experimentService.getExperiments().subscribe((experiments: Experiment[]) => {
@@ -118,23 +129,38 @@ export class UserPageComponent {
 
   deleteUser(username: string): void {
     // Delete the user from the service and get the updated user list
+    this.userEdited = false;
+    this.userAdded = false;
     const updatedUsers = this.userService.deleteUser(username);
-  
+    
     // Update the component's users array with the updated user list
     this.users = updatedUsers;
+    this.userDeleted = true;
   
     console.log('User deleted:', username);
   }
   addUser() {
     // Check if all required fields are filled
+    this.existingUsername = false;
+    this.fillForm = false;
+    this.passwordMatch = false;
+    this.userEdited = false;
+    this.userDeleted = false;
     if (!this.username || !this.firstName || !this.lastName || !this.emailAddress || !this.password || !this.rePassword || this.selectedExperimentsName.length === 0) {
       console.log('Please fill in all required fields and select at least one experiment.');
+      this.fillForm = true;
       return;
     }
   
     // Check if the passwords match
     if (this.password !== this.rePassword) {
       console.log('Passwords do not match. Please re-enter the same password.');
+      this.passwordMatch = true;
+      return;
+    }
+    const usernameTaken = this.users.some(user=> user.username === this.username);
+    if (usernameTaken){
+      this.existingUsername = true;
       return;
     }
     const maxId = this.users.reduce((max, user) => (user.id > max ? user.id : max), 0);
@@ -171,6 +197,7 @@ export class UserPageComponent {
     this.rePassword = '';
     this.selectedAccountType = '';
     this.selectedExperimentName = [];
+    this.userAdded = true;
   
     console.log('New user added:', newUser);
   }
@@ -216,6 +243,9 @@ private parseCsvData(csvData: string): any[] {
 }
 // Function to trigger importUsers() with the selected file
 onImportUsers(): void {
+  this.userEdited= false;
+  this.userAdded = false;
+  this.userDeleted = false;
   if (!this.selectedFile) {
     console.log('No file selected.');
     return;
@@ -232,10 +262,10 @@ importUsers(file: File): void {
     console.log('No file selected.');
     return;
   }
+  
   const maxId = this.users.reduce((max, user) => (user.id > max ? user.id : max), 0);
+  let nextId = maxId + 1; // Initialize nextId
 
-  // Assign new ids for the created users
-  let nextId = maxId + 1;
   // Read the contents of the selected file using FileReader
   const fileReader = new FileReader();
   fileReader.onload = () => {
@@ -243,24 +273,33 @@ importUsers(file: File): void {
     if (typeof fileReader.result === 'string') {
       // Parse CSV data and extract user information
       const usersData: any[] = this.parseCsvData(fileReader.result);
+      
       // Convert CSV data to User objects and save them
-      const createdUsers: User[] = usersData.map(userData => ({
-        id: nextId++, // You can use your logic to generate a unique ID for the new user
-        username: userData['username'],
-        firstName: userData['firstName'],
-        lastName: userData['lastName'],
-        name: `${userData['firstName']} ${userData['lastName']}`,
-        email: userData['email'],
-        password: userData['password'],
-        rePassword: userData['password'],
-        // Add other properties as needed based on your CSV format
-        accountType: this.mapAccountType(userData['accountType']), // Assuming a default value for accountType
-        experiments: [], // Initialize the experiments array with an empty array for now
-        created: new Date(),
-        lastModified: new Date(),
-        regStatus: 'Not Registered',
-        ipAddress: 'Not Active',
-      }));
+      const createdUsers: User[] = [];
+      for (const userData of usersData) {
+        const usernameTaken = this.users.some(user => user.username === userData['username']);
+
+        if (!usernameTaken) {
+          const newUser: User = {
+            id: nextId++, // Generate a unique ID for the new user
+            username: userData['username'],
+            firstName: userData['firstName'],
+            lastName: userData['lastName'],
+            name: `${userData['firstName']} ${userData['lastName']}`,
+            email: userData['email'],
+            password: userData['password'],
+            rePassword: userData['password'],
+            // Add other properties as needed based on your CSV format
+            accountType: this.mapAccountType(userData['accountType']), // Assuming a default value for accountType
+            experiments: [], // Initialize the experiments array with an empty array for now
+            created: new Date(),
+            lastModified: new Date(),
+            regStatus: 'Not Registered',
+            ipAddress: 'Not Active',
+          };
+          createdUsers.push(newUser);
+        }
+      }
 
       // Save the created users using the UserService's saveUsers method
       this.userService.saveUsers(createdUsers);
@@ -269,15 +308,16 @@ importUsers(file: File): void {
       this.users.push(...createdUsers);
 
       console.log('Users added from CSV data:', createdUsers);
-
-      console.log('Users added from CSV data:', createdUsers);
       console.log('Complete users array:', this.users);
+
+      this.userAdded = true;
     } else {
       console.log('Error reading file.');
     }
   };
   fileReader.readAsText(file);
 }
+
 // Function to map account type based on the CSV value
 private mapAccountType(csvAccountType: string): string {
   switch (csvAccountType) {

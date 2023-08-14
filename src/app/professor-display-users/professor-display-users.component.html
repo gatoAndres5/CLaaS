@@ -1,6 +1,14 @@
 <h2 class="page-title">Users Settings</h2>
 <hr class="divider"> 
-
+<div *ngIf="userAdded" class="user-message">
+  ✔ User(s) added
+</div>
+<div *ngIf="userEdited" class="user-message">
+  ✔ User(s) updated
+</div>
+<div *ngIf="userDeleted" class="user-message">
+  ✔ User(s) deleted
+</div>
 <button type="button" (click)="toggleUserForm()">Show/Hide Add New User Form</button>
 
 <div *ngIf="showUserForm">
@@ -9,6 +17,15 @@
   <hr class="divider">
   <div class="input-container">
   <div class="form-group">
+    <div *ngIf="existingUsername" class="error-message">
+      Username already exists. Please choose a different username.
+    </div>
+    <div *ngIf="fillForm" class="error-message">
+      Please fill in all required fields and select at least one experiment.
+    </div>
+    <div *ngIf="passwordMatch" class="error-message">
+      Passwords do not match. Please re-enter the same password.
+    </div>
     <label for="username">Username</label>
     <input type="text" id="username" name="username" [(ngModel)]="username" required class="input-long">
     <label for="username">First Name</label>

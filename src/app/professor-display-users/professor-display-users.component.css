@@ -168,3 +168,15 @@ input[type="password"] {
     font-family: Proxima Nova, sans-serif;
     color: #363636;
 }
+.user-message{
+  background-color: #bff3c1;
+    padding: 15px;
+    text-align: left;
+    font-family: Proxima Nova, sans-serif;
+    margin-bottom: 15px;
+    margin-top: 15px;
+    color: #167a1e;
+    font-family: Proxima Nova, sans-serif;
+    font-size: 16px;
+    width: full;
+}

@@ -11,6 +11,9 @@
   <div class="logout-message" *ngIf= "isLoggedOut">
     <p class="green-text">✔ You have logged out.</p>
   </div>
+  <div class="incorrect-message" *ngIf="incorrectLogin">
+    <p class="red-text">❌ Failed to determine that the form that was submitted was not forged. Please try to submit the form again.</p>
+  </div>
   <form (ngSubmit)="login()" #loginForm="ngForm">
     <div class="form-group">
       <label for="username">Username</label>
