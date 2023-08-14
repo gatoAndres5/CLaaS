@@ -5,7 +5,7 @@ import { VMImage } from './vmimage.model';
 @Injectable({
   providedIn: 'root'
 })
-export class VMImagesService {
+export class VMImagesService { //basically every local storage needs to be change to an http request to backend file
   private readonly localStorageKey = 'VMImages'
   private vmImages: VMImage[] = [];
   constructor() {

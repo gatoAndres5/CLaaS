@@ -18,7 +18,7 @@ export class ExperimentInstructionsDialogComponent {
   ) {}
 
   async ngOnInit() {
-    if (this.data.fileName) {
+    if (this.data.fileName) { //gonna need to find a way to display the slides 
       const embedUrl = await this.experimentService.convertFileToDataUrl(this.data.fileName);
       this.data.embedUrl = embedUrl;
     }

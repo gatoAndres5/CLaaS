@@ -9,7 +9,7 @@ import { UserService } from '../user.service';
   templateUrl: './professor-modify-users.component.html',
   styleUrls: ['./professor-modify-users.component.css']
 })
-export class ProfessorModifyUsersComponent {
+export class ProfessorModifyUsersComponent { //component is similar to experiment-users.component, but this is professor view
   selectedExperimentId: number | null = null;
   experiments: Experiment[] = [];
   users: User[] = [];

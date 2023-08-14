@@ -1,14 +1,14 @@
 import { Injectable } from '@angular/core';
-import { Observable, of, throwError } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { Experiment } from './experiment.model';
 
 @Injectable({
   providedIn: 'root'
 })
-export class ExperimentService {
+export class ExperimentService { //basically every local storage needs to be change to an http request to backend file
   private readonly localStorageKey = 'experiments';
   private experiments: Experiment[] = [];
-  private nextExperimentId = 1;
+ 
 
   constructor() {
     this.loadFromLocalStorage();

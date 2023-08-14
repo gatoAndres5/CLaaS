@@ -17,7 +17,6 @@ export class TaskBarComponent implements OnInit {
   userRole: string = '';
   username: string = '';
   
-
   constructor(private router: Router,private userRoleService: UserRoleService,private logoutService:LogoutService,private userService: UserService) { }
 
   ngOnInit(): void {
@@ -36,10 +35,6 @@ export class TaskBarComponent implements OnInit {
     }
   }
   
-  
-  
-  
-  
   logout(): void {
     // Perform any necessary actions to log out the user
     // For example, clearing session storage, resetting user data, etc.
@@ -50,6 +45,7 @@ export class TaskBarComponent implements OnInit {
     this.router.navigate(['/login']); // Redirect to the login screen
     
   }
+  //see app-routing.module for names of routes
   changePassword(): void{
     this.router.navigate(['/change-password']);
   }

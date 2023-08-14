@@ -8,6 +8,7 @@ import { Vpc } from '../vpc.model';
 import { VpcService } from '../vpc.service';
 import { DependencyService } from '../dependency.service'
 import { VMImageDependency, VPCDependency } from '../dependency.model';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-configuration',
@@ -15,12 +16,12 @@ import { VMImageDependency, VPCDependency } from '../dependency.model';
   styleUrls: ['./configuration.component.css']
 })
 export class ConfigurationComponent implements OnInit {
-  experiments: Experiment[] = [];
-  experimentVMImageMap: { [experimentId: number]: number } = {};
-  VMImages: VMImage[] = [];
-  vpc: Vpc[] = [];
-  VMImageDependency: VMImageDependency[] = [];
-  VPCDependency: VPCDependency[] = [];
+  experiments: Experiment[] = []; //holds experiments
+  VMImages: VMImage[] = []; //holds VM image
+  vpc: Vpc[] = []; //holds vpc
+  VMImageDependency: VMImageDependency[] = []; //holds vm image dependency
+  VPCDependency: VPCDependency[] = []; //holds vpc dependency
+  //below are vars for input forms
   vpcID: string = '';
   CIDRBlock: string = '';
   SecurityGroup: string = '';
@@ -28,31 +29,28 @@ export class ConfigurationComponent implements OnInit {
   experimentDescription: string = '';
   VMImageName: string = '';
   VMImageUID: string = '';
+  //below are conditions for saving
   isSavingExperiment = false;
   isSavingVMImage = false;
   isSavingVPC = false;
+  //below are placements for selected items
   selectedExperiment: string = '';
   selectedVMImage: string = '';
   selectedVPC: string = '';
   selectedExperimentId: number | undefined = undefined;
   selectedVMImageId: number | undefined;
   selectedVpcId: number | undefined;
-  login(){
 
+  setUsers(){
+    this.router.navigate(['/viewExperimentUsers']);
   }
-  setUsers(experimentId: number){
-  
-  }
-  username: string = '';
-  password: string = '';
-  
-
+  //setup forms for inputting information
   @ViewChild('experimentForm') experimentForm!: NgForm;
   @ViewChild('vmImageForm') vmImageForm!: NgForm;
   @ViewChild('vpcForm') vpcForm!:NgForm;
   
 
-  constructor(private experimentService: ExperimentService, private VMImagesService: VMImagesService,private VpcService: VpcService,private DependencyService: DependencyService) {}
+  constructor(private experimentService: ExperimentService, private VMImagesService: VMImagesService,private VpcService: VpcService,private DependencyService: DependencyService,private router:Router) {}
 
   ngOnInit() {
     // Fetch the experiments only if the experiments array is empty
@@ -78,28 +76,22 @@ export class ConfigurationComponent implements OnInit {
     this.experimentName = '';
   }
   // This method is called whenever the selectedExperimentId is changed in the dropdown
-  
-  
   onExperimentSelectChange(): void {
     if (!this.selectedExperiment) {
       console.log('No experiment selected.');
       return;
     }
   
-    // Find the selected experiment from the experiments array by name
-  const selectedExperiment = this.experiments.find(experiment => experiment.name === this.selectedExperiment);
+  // Find the selected experiment from the experiments array by name
+    const selectedExperiment = this.experiments.find(experiment => experiment.name === this.selectedExperiment);
 
   // Check if the selected experiment is valid and log its name
-  if (selectedExperiment) {
+    if (selectedExperiment) {
     //console.log('Selected Experiment:', selectedExperiment.name);
-  } else {
+    } else {
     //console.log('Invalid experiment or no experiment found.');
+    }
   }
-}
-  
-  
-  
-
   fetchExperiments() {
     console.log('Arrived in fetchExperiments');
     this.experimentService.getExperiments().subscribe((experiments: Experiment[]) => {
@@ -145,7 +137,6 @@ export class ConfigurationComponent implements OnInit {
       this.experiments = this.experiments.filter(experiment => experiment.id !== experimentId);
     });
   }
-
   saveExperiment(): void {
     if (this.isSavingExperiment || !this.experimentForm.valid) {
       return;
@@ -175,7 +166,7 @@ export class ConfigurationComponent implements OnInit {
       this.experimentDescription = '';
       this.isSavingExperiment = false;
       console.log('Experiments array after adding:', this.experiments);
-    console.log('Experiments array length after adding:', this.experiments.length);
+      console.log('Experiments array length after adding:', this.experiments.length);
     });
   }
   saveVMImage(): void {
@@ -186,6 +177,7 @@ export class ConfigurationComponent implements OnInit {
     const isDuplicate = this.VMImages.some(VMImage => VMImage.name === this.VMImageName);
 
     if (isDuplicate) {
+      //might need to change this to on screen message for user
       console.log('VM Image name already exists. Please choose a different name.');
       return;
     }
@@ -205,7 +197,7 @@ export class ConfigurationComponent implements OnInit {
       this.VMImageUID = '';
       this.isSavingVMImage = false;
       console.log('VM Images array after adding:', this.VMImages);
-    console.log('VM Images array length after adding:', this.VMImages.length);
+      console.log('VM Images array length after adding:', this.VMImages.length);
     });
   }
   deleteVMImages(VMImageId: number) {
@@ -221,6 +213,7 @@ export class ConfigurationComponent implements OnInit {
     const isDuplicate = this.vpc.some(vpc => vpc.vpcID === this.vpcID);
 
     if (isDuplicate) {
+      //same thing here might want on screen message
       console.log('VPC Id already exists. Please choose a different Id.');
       return;
     }
@@ -292,7 +285,7 @@ export class ConfigurationComponent implements OnInit {
       this.VPCDependency.push(addedDependency);
       
       console.log('Vpc Dependency array after adding:', this.VPCDependency);
-    console.log('Vpc Dependency array length after adding:', this.VPCDependency.length);
+      console.log('Vpc Dependency array length after adding:', this.VPCDependency.length);
     });
   }
   saveVMImageDependency(): void {
@@ -338,10 +331,9 @@ export class ConfigurationComponent implements OnInit {
       this.VMImageDependency.push(addedDependency);
       
       console.log('VM Image Dependency array after adding:', this.VMImageDependency);
-    console.log('VM Image Dependency array length after adding:', this.VMImageDependency.length);
+      console.log('VM Image Dependency array length after adding:', this.VMImageDependency.length);
     });
   }
-  
   
   deleteVMImageDependency(dependencyId: number) {
     this.DependencyService.deleteVMImageDependency(dependencyId).subscribe(() => {
@@ -353,11 +345,6 @@ export class ConfigurationComponent implements OnInit {
       this.VPCDependency = this.VPCDependency.filter(Dependency => Dependency.id !== dependencyId);
     });
   }
-  deleteDependencyVMInstanceRecords(experimentId:number,vmImageId:number){
-
-  }
-  
-  
 }
 
 

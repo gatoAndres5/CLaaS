@@ -10,6 +10,8 @@ import { User } from '../user.model';
   styleUrls: ['./professor-display-users.component.css']
 })
 export class ProfessorDisplayUsersComponent {
+  //page is similar to user-page.component, this is just the professor view of the page
+  //see that page for what each element below is for
   showUserForm: boolean = false;
   showEditUserForm: boolean = false;
   username: string = '';
@@ -73,7 +75,7 @@ export class ProfessorDisplayUsersComponent {
       this.editedUser!.accountType = this.selectedAccountType;
       this.editedUser!.lastModified = new Date();
   
-    // Assuming you have a service method to update the user
+    
       this.userService.updateUser(this.editedUser!);
   
     // Reset the form fields and selectedExperimentIds array

@@ -5,7 +5,7 @@ import { User } from './user.model';
 @Injectable({
   providedIn: 'root'
 })
-export class UserService {
+export class UserService { //basically every local storage needs to be change to an http request to backend file
   private localStorageKey = 'users'; // Key to store users in local storage
   private users: User[] = this.getUsersFromLocalStorage();
   private loggedInUser: User | null = null;

@@ -2,6 +2,7 @@
 <hr class="divider"> 
 <h2 class="content-title">Add Experiment</h2>
 <hr class="divider"> 
+
 <div class="add-content">
   <form (ngSubmit)="saveExperiment()" #experimentForm="ngForm">
     <div class="form-group">
@@ -14,11 +15,11 @@
     </div>
     <button type="submit" [disabled]="isSavingExperiment || !experimentForm.valid">Save Experiment</button>
   </form>
-  
-  
 </div>
+
 <h2 class="content-title">Add VM Image</h2>
 <hr class="divider"> 
+
 <div class="add-content">
   <form (ngSubmit)="saveVMImage()" #vmImageForm="ngForm">
     <div class="form-group">
@@ -31,226 +32,221 @@
     </div>
     <button type="submit" [disabled]="isSavingVMImage || !vmImageForm.valid">Save VM Image</button>
   </form>
-    </div>
+</div>
+
 <h2 class="content-title">Add Vpcs</h2>
-    <hr class="divider"> 
-    <div class="add-content">
-        <form (ngSubmit)="saveVPC()" #vpcForm="ngForm">
-            <div class="form-group">
-              <label for="vpcId">AWS Vpc Id</label>
-              <input type="text" id="vpcId" name="vpcId" [(ngModel)]="vpcID" required class="input-long">
-            </div>
-            <div class="form-group">
-              <label for="CIDR">CIDR Block</label>
-              <input type="text" id="CIDR" name="CIDR" [(ngModel)]="CIDRBlock" required class="input-long">
-            </div>
-            <div class="form-group">
-                <label for="SecurityGroup">Security Group</label>
-                <input type="text" id="SecurityGroup" name="SecurityGroup" [(ngModel)]="SecurityGroup" required class="input-long">
-              </div>
-            
-            <button type="submit" [disabled]="isSavingVPC || !vpcForm.valid">Save VPC</button>
-          </form>
-        </div>
-        <h2 class="content-title">Add VM Images to Experiments</h2>
-        <hr class="divider"> 
-        <div class="add-content">
-          <div class="centered-section">
-            <div class="experiment-dropdown">
-              <label for="experiment-select" class="sr-only">Experiment</label>
-              <select id="experiment-select" [(ngModel)]="selectedExperiment">
-                <option *ngFor="let experiment of experiments" [value]="experiment.name">
-                  {{ experiment.name }}
-                </option>
-              </select>
-            </div>
-          </div>
-          <div class="add-content">
-            <div class="centered-section">
-              <div class="experiment-dropdown">
-                <label for="experiment-select" class="sr-only">VM Image</label>
-                <select id="experiment-select" [(ngModel)]="selectedVMImage">
-                  <option *ngFor="let vmImage of VMImages" [value]="vmImage.name">
-                    {{ vmImage.name }}
-                  </option>
-                </select>
-              </div>
-            </div>
-            <button type="submit" [disabled]="!selectedExperiment || !selectedVMImage" (click)="saveVMImageDependency()">Add Dependency</button>
-          </div>
-        </div>
+<hr class="divider"> 
+
+<div class="add-content">
+  <form (ngSubmit)="saveVPC()" #vpcForm="ngForm">
+    <div class="form-group">
+      <label for="vpcId">AWS Vpc Id</label>
+      <input type="text" id="vpcId" name="vpcId" [(ngModel)]="vpcID" required class="input-long">
+    </div>
+    <div class="form-group">
+      <label for="CIDR">CIDR Block</label>
+      <input type="text" id="CIDR" name="CIDR" [(ngModel)]="CIDRBlock" required class="input-long">
+    </div>
+    <div class="form-group">
+        <label for="SecurityGroup">Security Group</label>
+        <input type="text" id="SecurityGroup" name="SecurityGroup" [(ngModel)]="SecurityGroup" required class="input-long">
+    </div>
+    <button type="submit" [disabled]="isSavingVPC || !vpcForm.valid">Save VPC</button>
+  </form>
+</div>
         
+<h2 class="content-title">Add VM Images to Experiments</h2>
+<hr class="divider"> 
+  
+<div class="add-content">
+  <div class="centered-section">
+    <div class="experiment-dropdown">
+        <label for="experiment-select" class="sr-only">Experiment</label>
+        <select id="experiment-select" [(ngModel)]="selectedExperiment">
+        <option *ngFor="let experiment of experiments" [value]="experiment.name">
+         {{ experiment.name }}
+        </option>
+        </select>
+    </div>
+  </div>
+  <div class="add-content">
+    <div class="centered-section">
+      <div class="experiment-dropdown">
+        <label for="experiment-select" class="sr-only">VM Image</label>
+        <select id="experiment-select" [(ngModel)]="selectedVMImage">
+        <option *ngFor="let vmImage of VMImages" [value]="vmImage.name">
+          {{ vmImage.name }}
+        </option>
+        </select>
+      </div>
+    </div>
+    <button type="submit" [disabled]="!selectedExperiment || !selectedVMImage" (click)="saveVMImageDependency()">Add Dependency</button>
+  </div>
+</div>
+     
+
 <h2 class="content-title">Add VPCs to Experiments</h2>
-  <hr class="divider"> 
-    <div class="add-content">
+<hr class="divider"> 
+  <div class="add-content">
       <div class="centered-section">
           <div class="experiment-dropdown">
             <label for="experiment-select" class="sr-only">Experiment</label>
             <select id="experiment-select" [(ngModel)]="selectedExperiment">
-                    
-              <option *ngFor="let experiment of experiments" [value]="experiment.name">
-                {{ experiment.name }}
-              </option>
+            <option *ngFor="let experiment of experiments" [value]="experiment.name">
+              {{ experiment.name }}
+            </option>
             </select>
           </div>
       </div>
     
-    <div class="add-content">
+      <div class="add-content">
         <div class="centered-section">
           <div class="experiment-dropdown">
             <label for="experiment-select" class="sr-only">VPCs</label>
             <select id="experiment-select" [(ngModel)]="selectedVPC">
-                    
               <option *ngFor="let vpc of vpc" [value]="vpc.vpcID">
                 {{ vpc.vpcID }}
               </option>
             </select>
           </div>
-          
         </div>
         <button type="submit" [disabled]="!selectedExperiment || !selectedVPC" (click)="saveVPCDependency()">Add Dependency</button>
-    </div>
-    </div>
+      </div>
+  </div>
 
-    <div *ngIf="experiments.length > -1">
-      <h2 class="content-title">Experiments</h2>
-      <hr class="divider">
-      <div class="experiment-header">
-        <span>Experiment Name</span>
-        <span>Experiment Description</span>
-        <span>Enabled</span>
-        <span>Added On</span>
-        <span>Last Mod.</span>
-        <span>Delete</span>
-        <span>Set Users</span>
+
+<div *ngIf="experiments.length > -1">
+  <h2 class="content-title">Experiments</h2>
+  <hr class="divider">
+  <div class="experiment-header">
+    <span>Experiment Name</span>
+    <span>Experiment Description</span>
+    <span>Enabled</span>
+    <span>Added On</span>
+    <span>Last Mod.</span>
+    <span>Delete</span>
+    <span>Set Users</span>
+  </div>
+  <hr class="divider">
+    <div *ngFor="let experiment of experiments" class="experiment-item">
+      <div class="experiment-details">
+        <span>{{ experiment.name }}</span>
+        <span>{{ experiment.description }}</span>
+        <span>{{ experiment.enabled }}</span>
+        <span>{{ experiment.addedOn | date:'medium' }}</span>
+        <span>{{ experiment.lastModified | date:'medium' }}</span>
+        <span><button type="submit" (click)="deleteExperiment(experiment.id)">Delete</button></span>
+        <span><button type="submit" (click)="setUsers()">Set Users</button></span>
       </div>
-      <hr class="divider">
-      <div *ngFor="let experiment of experiments" class="experiment-item">
-        <div class="experiment-details">
-          <span>{{ experiment.name }}</span>
-          <span>{{ experiment.description }}</span>
-          <span>{{ experiment.enabled }}</span>
-          <span>{{ experiment.addedOn | date:'medium' }}</span>
-          <span>{{ experiment.lastModified | date:'medium' }}</span>
-          <span><button type="submit" (click)="deleteExperiment(experiment.id)">Delete</button></span>
-          <span><button type="submit" (click)="setUsers(experiment.id)">Set Users</button></span>
-        </div>
-        <hr class="divider"> <!-- Add the <hr> tag here, it will be horizontal -->
-      </div>
-      
-      
+      <hr class="divider"> <!-- Add the <hr> tag here, it will be horizontal -->
     </div>
+  </div>
     
 
-    <div *ngIf="VMImages.length > -1">
-      <h2 class="content-title">VM Images</h2>
-      <hr class="divider">
-      <div class="experiment-header">
-        <span>#</span>
-        <span>VM Name/Description</span>
-        <span>VM UID</span>
-        <span>Added On</span>
-        <span>Last Modification</span>
-        <span>Delete VM Image</span>
+<div *ngIf="VMImages.length > -1">
+  <h2 class="content-title">VM Images</h2>
+  <hr class="divider">
+  <div class="experiment-header">
+    <span>#</span>
+    <span>VM Name/Description</span>
+    <span>VM UID</span>
+    <span>Added On</span>
+    <span>Last Modification</span>
+    <span>Delete VM Image</span>
+  </div>
+  <hr class="divider">
+    <div *ngFor="let VMImages of VMImages" class="experiment-item">
+      <div class="experiment-details">
+        <span>{{ VMImages.id }}</span>
+        <span>{{ VMImages.name }}</span>
+        <span>{{ VMImages.UID }}</span>
+        <span>{{ VMImages.added | date:'medium' }}</span>
+        <span>{{ VMImages.lastModified | date:'medium' }}</span>
+        <span><button type="submit" (click)="deleteVMImages(VMImages.id)">Delete VM Image</button></span>
       </div>
-      <hr class="divider">
-      <div *ngFor="let VMImages of VMImages" class="experiment-item">
-        <div class="experiment-details">
-          <span>{{ VMImages.id }}</span>
-          <span>{{ VMImages.name }}</span>
-          <span>{{ VMImages.UID }}</span>
-          <span>{{ VMImages.added | date:'medium' }}</span>
-          <span>{{ VMImages.lastModified | date:'medium' }}</span>
-          <span><button type="submit" (click)="deleteVMImages(VMImages.id)">Delete VM Image</button></span>
-        </div>
-        <hr class="divider"> <!-- Add the <hr> tag here, it will be horizontal -->
-      </div>
-      
-      
-    </div> 
-
-    <div *ngIf="vpc.length > -1">
-      <h2 class="content-title">VPCS</h2>
-      <hr class="divider">
-      <div class="experiment-header">
-        <span>#</span>
-        <span>VPC ID</span>
-        <span>CIDR Block</span>
-        <span>Complete CIDR Block</span>
-        <span>Security Group</span>
-        <span>Delete VPC</span>
-      </div>
-      <hr class="divider">
-      <div *ngFor="let vpc of vpc" class="experiment-item">
-        <div class="experiment-details">
-          <span>{{ vpc.id }}</span>
-          <span>{{ vpc.vpcID }}</span>
-          <span>{{ vpc.CIDRBlock }}</span>
-          <span>{{ vpc.CompleteCIDRBlock }}</span>
-          <span>{{ vpc.SecurityGroup }}</span>
-          <span><button type="submit" (click)="deleteVPC(vpc.id)">Delete VPC</button></span>
-        </div>
-        <hr class="divider"> <!-- Add the <hr> tag here, it will be horizontal -->
-      </div>
-      
-      
-    </div>  
+    <hr class="divider"> <!-- Add the <hr> tag here, it will be horizontal -->
+    </div>
+</div> 
 
 
-    <div *ngIf="VMImageDependency.length > -1">
-      <h2 class="content-title">VM Images to Experiments Dependencies</h2>
-      <hr class="divider">
-      <div class="experiment-header">
-        <span>#</span>
-        <span>Experiment Name</span>
-        <span>VM Image Name</span>
-        <span>VM Image ID</span>
-        <span>Added On</span>
-        <span>Delete Dependency</span>
-        <span>Delete Dependent VM Instance Records</span>
+<div *ngIf="vpc.length > -1">
+  <h2 class="content-title">VPCS</h2>
+  <hr class="divider">
+    <div class="experiment-header">
+      <span>#</span>
+      <span>VPC ID</span>
+      <span>CIDR Block</span>
+      <span>Complete CIDR Block</span>
+      <span>Security Group</span>
+      <span>Delete VPC</span>
+    </div>
+  <hr class="divider">
+    <div *ngFor="let vpc of vpc" class="experiment-item">
+      <div class="experiment-details">
+        <span>{{ vpc.id }}</span>
+        <span>{{ vpc.vpcID }}</span>
+        <span>{{ vpc.CIDRBlock }}</span>
+        <span>{{ vpc.CompleteCIDRBlock }}</span>
+        <span>{{ vpc.SecurityGroup }}</span>
+        <span><button type="submit" (click)="deleteVPC(vpc.id)">Delete VPC</button></span>
       </div>
-      <hr class="divider">
-      
+    <hr class="divider"> <!-- Add the <hr> tag here, it will be horizontal -->
+    </div>
+</div>  
+
+
+<div *ngIf="VMImageDependency.length > -1">
+  <h2 class="content-title">VM Images to Experiments Dependencies</h2>
+  <hr class="divider">
+    <div class="experiment-header">
+      <span>#</span>
+      <span>Experiment Name</span>
+      <span>VM Image Name</span>
+      <span>VM Image ID</span>
+      <span>Added On</span>
+      <span>Delete Dependency</span>
+      <span>Delete Dependent VM Instance Records</span>
+    </div>
+  <hr class="divider">    
           <!-- Display the number of dependencies -->
-          <div *ngFor="let VMImageDependency of VMImageDependency" class="experiment-item">
-            <div class="experiment-details">
-              <span>{{ VMImageDependency.id }}</span>
-              <span>{{ VMImageDependency.experimentName }}</span>
-              <span>{{ VMImageDependency.vmimageName }}</span>
-              <span>{{ VMImageDependency.vmimageUID }}</span>
-              <span>{{ VMImageDependency.addedOn | date:'medium'}}</span>
-              <span><button type="submit" (click)="deleteVMImageDependency(VMImageDependency.id)">Delete</button></span>
-              <span><button type="submit" (click)="deleteVMImageDependency(VMImageDependency.id)">Delete</button></span>
-            </div>
-            <hr class="divider"> <!-- Add the <hr> tag here, it will be horizontal -->
-          </div>
-    
-        </div>
-        <div *ngIf="VPCDependency.length > -1">
-          <h2 class="content-title">VPCs to Experiments Dependencies</h2>
-          <hr class="divider">
-          <div class="experiment-header">
-            <span>#</span>
-            <span>Experiment Name</span>
-            <span>VPC ID</span>
-            <span>CIDR Block</span>
-            <span>Security Group</span>
-            <span>Delete Dependency</span>
-          </div>
-          <hr class="divider">
-          
-              <!-- Display the number of dependencies -->
-              <div *ngFor="let VPCDependency of VPCDependency" class="experiment-item">
-                <div class="experiment-details">
-                  <span>{{ VPCDependency.id }}</span>
-                  <span>{{ VPCDependency.experimentName }}</span>
-                  <span>{{ VPCDependency.vpcID }}</span>
-                  <span>{{ VPCDependency.CIDRBlock }}</span>
-                  <span>{{ VPCDependency.SecurityGroup }}</span>
-                  <span><button type="submit" (click)="deleteVPCDependency(VPCDependency.id)">Delete</button></span>
-                </div>
-                <hr class="divider"> <!-- Add the <hr> tag here, it will be horizontal -->
-              </div>
+  <div *ngFor="let VMImageDependency of VMImageDependency" class="experiment-item">
+    <div class="experiment-details">
+      <span>{{ VMImageDependency.id }}</span>
+      <span>{{ VMImageDependency.experimentName }}</span>
+      <span>{{ VMImageDependency.vmimageName }}</span>
+      <span>{{ VMImageDependency.vmimageUID }}</span>
+      <span>{{ VMImageDependency.addedOn | date:'medium'}}</span>
+      <span><button type="submit" (click)="deleteVMImageDependency(VMImageDependency.id)">Delete</button></span>
+      <span><button type="submit" (click)="deleteVMImageDependency(VMImageDependency.id)">Delete</button></span>
+    </div>
+    <hr class="divider"> 
+  </div>
+</div>
         
-            </div>
+
+<div *ngIf="VPCDependency.length > -1">
+  <h2 class="content-title">VPCs to Experiments Dependencies</h2>
+  <hr class="divider">
+    <div class="experiment-header">
+      <span>#</span>
+      <span>Experiment Name</span>
+      <span>VPC ID</span>
+      <span>CIDR Block</span>
+      <span>Security Group</span>
+      <span>Delete Dependency</span>
+    </div>
+  <hr class="divider">
+   <!-- Display the number of dependencies -->
+  <div *ngFor="let VPCDependency of VPCDependency" class="experiment-item">
+    <div class="experiment-details">
+      <span>{{ VPCDependency.id }}</span>
+      <span>{{ VPCDependency.experimentName }}</span>
+      <span>{{ VPCDependency.vpcID }}</span>
+      <span>{{ VPCDependency.CIDRBlock }}</span>
+      <span>{{ VPCDependency.SecurityGroup }}</span>
+      <span><button type="submit" (click)="deleteVPCDependency(VPCDependency.id)">Delete</button></span>
+    </div>
+    <hr class="divider"> 
+  </div>
+</div>
         

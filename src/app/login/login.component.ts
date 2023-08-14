@@ -36,7 +36,7 @@ export class LoginComponent {
       // Redirect to the home page or any other desired route
       this.router.navigate(['/user-agreement']);
     } 
-    else if(this.username === "a" && this.password === "p"){ //delete this later
+    else if(this.username === "a" && this.password === "p"){ //delete this later for login when no users exist
       console.log('Admin login successful!');
       this.userRoleService.userRole = "Administrator"; 
       this.router.navigate(['/user-agreement']);

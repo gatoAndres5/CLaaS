@@ -21,9 +21,9 @@ const routes: Routes = [
   { path: 'viewSlides',component:ExperimentSlidesComponent},
   { path:'viewUsers',component:UserPageComponent},
   { path: 'viewExperimentUsers',component:ExperimentUsersComponent},
-  {path: 'experimentVM', component: ExperimentDisplayComponent},
-  {path: 'change-password', component: ChangePasswordComponent},
-  {path: 'professor-modify-users', component: ProfessorModifyUsersComponent},
+  { path: 'experimentVM', component: ExperimentDisplayComponent},
+  { path: 'change-password', component: ChangePasswordComponent},
+  { path: 'professor-modify-users', component: ProfessorModifyUsersComponent},
   { path: 'professor-add-users',component: ProfessorDisplayUsersComponent}
   // Other routes for your application
 ];

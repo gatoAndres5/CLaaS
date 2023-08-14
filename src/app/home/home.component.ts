@@ -7,7 +7,6 @@ import { User } from '../user.model';
 import { Router } from '@angular/router';
 
 
-
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
@@ -34,15 +33,13 @@ export class HomeComponent implements OnInit {
     this.fetchExperiments();
     this.fetchLoggedInUser();
     console.log("Logged In User:", this.loggedInUser);
-    
   }
   
 
   fetchExperiments() {
     this.experimentService.getExperiments().subscribe((experiments: Experiment[]) => {
       this.experiments = experiments;
-      //console.log('Experiments fetched:', experiments);
-
+   
     });
   }
 
@@ -54,7 +51,6 @@ export class HomeComponent implements OnInit {
     this.userService.updateLoggedInUser(this.loggedInUser!);
   }
   updateAvailableExperiments() {
-    //console.log("Logged In User:",this.loggedInUser);
     if (this.loggedInUser) {
       // Filter the experiments based on the user's experiments array
       const availableExperiments = this.experiments.filter((experiment) =>
@@ -83,7 +79,6 @@ export class HomeComponent implements OnInit {
     return experiment ? experiment.description : undefined;
   }
   navigateToExperimentDetails(experimentName: string): void {
-    // Assuming you have a route named 'experimentVM' for showing experiment details in experiment-display.html
     this.router.navigate(['/experimentVM'], { queryParams: { name: experimentName } });
   }
 }

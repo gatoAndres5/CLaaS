@@ -108,10 +108,6 @@ export class ExperimentUsersComponent implements OnInit {
     console.log('Updated users array:', this.users);
     console.log('Updated loggedInUser in UserService:', loggedInUser);
   }
-  
-  
-  
-  
 }
 
 

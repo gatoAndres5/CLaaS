@@ -1,22 +1,20 @@
 <h2 class="page-title">{{experiment?.name || 'Experiment Name Not Available'}}</h2>
-    <hr class="divider">
-    <div class="content-container">
+<hr class="divider">
+  <div class="content-container">
     <div class="content-section">
       <button type="submit" (click)="onToggleExperimentSlides()">Show/Hide Experiment Instructions</button>
-        
-      <div class="experiment-slides" >
-        <label for="vm"></label>
-      </div>
+    <div class="experiment-slides" > <!--Display experiment slides here-->
       
-      
-  
-      <div class="slides-section" >
-        <div class="vmTitle">
-          <label for="vm">Virtual Machines</label>
-        </div>
+    </div>
+    
+    <div class="slides-section" >
+      <div class="vmTitle">
+        <label for="vm">Virtual Machines</label>
       </div>
-      <button type="submit" >Reboot VM</button>
-      <div class="vm-section"></div>
+    </div>
+    <button type="submit" >Reboot VM</button>
+    <div class="vm-section"></div><!--section where the vm needs to be displayed--> 
+    
     </div>
     
   </div>

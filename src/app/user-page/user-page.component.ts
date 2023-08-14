@@ -10,8 +10,10 @@ import { User } from '../user.model';
   styleUrls: ['./user-page.component.css']
 })
 export class UserPageComponent {
+  //below are conditions for forms
   showUserForm: boolean = false;
   showEditUserForm: boolean = false;
+  //below hold values for input forms
   username: string = '';
   firstName: string = '';
   lastName: string = '';
@@ -22,12 +24,14 @@ export class UserPageComponent {
   name: string = '';
   ipAddress: string = '';
   selectedAccountType: string = '';
+  //below hold user or experiment information
   editedUser: User | null = null;
   userExperiments: Experiment[] = [];
   users: User[] = [];
   selectedExperimentName: string[] = [];
   selectedFile: File |undefined ;
   originalUsername: string | undefined;
+  //more boolean values that are changed dependent on events
   existingUsername = false;
   fillForm = false;
   passwordMatch = false;
@@ -39,8 +43,8 @@ export class UserPageComponent {
 
   editUsers(username:string){
        // Find the user based on the username
-  this.existingUsername = false;
-  const userToEdit = this.users.find(user => user.username === username);
+    this.existingUsername = false;
+    const userToEdit = this.users.find(user => user.username === username);
 
   // If user is found, set the user data and show the edit user form
     if (userToEdit) {

@@ -5,7 +5,7 @@ import { Vpc } from './vpc.model';
 @Injectable({
   providedIn: 'root'
 })
-export class VpcService {
+export class VpcService { //basically every local storage needs to be change to an http request to backend file
   private readonly localStorageKey = 'vpc'
   private vpc : Vpc[] = [];
   constructor() {

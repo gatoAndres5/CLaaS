@@ -10,7 +10,7 @@ import { VPCDependency } from './dependency.model';
 @Injectable({
   providedIn: 'root'
 })
-export class DependencyService {
+export class DependencyService { //basically every local storage needs to be change to an http request to backend file
   private VMImageDependency: VMImageDependency[] = [];
   private VPCDependency: VPCDependency[] = [];
   private readonly VMImagelocalStorageKey = 'VMImageDependencies'

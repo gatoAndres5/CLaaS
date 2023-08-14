@@ -60,16 +60,12 @@ button[type="submit"] {
   font-weight: normal;
   font-family: Proxima Nova, sans-serif;
 }
-
-
-
 .experiment-dropdown {
   margin-top: 1px;
   display: inline-flex;
   align-items: center;
   color: #363636;
 }
-
 .experiment-dropdown select {
   margin-right: 25px;
   margin-left: 10px;
@@ -101,12 +97,10 @@ button[type="submit"] {
   margin-left: 15px;
   margin-top: 40px;
 }
-
 .experiment-details {
   display: flex;
   justify-content: space-between;
 }
-
 .experiment-details span{
   flex: 1;
   margin-right: 10px;

@@ -42,10 +42,6 @@ export class ExperimentSlidesComponent {
     this.experimentService.uploadFileForExperiment(this.selectedExperimentName, this.selectedFile);
     console.log("Updated experiments array:", this.experiments);
   }
-  
-  
-  
-
   onExperimentSelected() {
     console.log("Selected experiment:", this.selectedExperimentName);
   }

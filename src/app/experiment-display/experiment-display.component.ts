@@ -5,7 +5,6 @@ import { ExperimentInstructionsDialogComponent } from '../experiment-instruction
 import { ExperimentService } from '../experiment.service';
 import { Experiment } from '../experiment.model';
 
- // Import the SlidePopupComponent
 
 @Component({
   selector: 'app-experiment-display',
@@ -32,10 +31,10 @@ export class ExperimentDisplayComponent {
       });
     });
   }
-  getExperimentByName(name: string): Experiment | null {
+  getExperimentByName(name: string): Experiment | null { //gathers name of experiment clicked on
     return this.experiments.find((experiment) => experiment.name === name) || null;
   }
-  onToggleExperimentSlides() {
+  onToggleExperimentSlides() { //when user clicks show/hide experiment, suppose to display slides
     this.showExperimentSlides = !this.showExperimentSlides;
   
     if (this.showExperimentSlides && this.fileName) {

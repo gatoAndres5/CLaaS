@@ -1,19 +1,18 @@
 
-    <h2 class="page-title">Modify Experiment Slides</h2>
-    <hr class="divider">
-    <div class="content-container">
+<h2 class="page-title">Modify Experiment Slides</h2>
+<hr class="divider">
+  <div class="content-container">
     <div class="centered-section">
         <div class="experiment-dropdown">
           <label for="experiment-select" class="sr-only">Experiment</label>
           <select id="experiment-select" [(ngModel)]="selectedExperimentName" (change)="onExperimentSelected()">
-            <option value="">Select an experiment</option>
-            <option *ngFor="let experiment of experiments" [value]="experiment.name">
-              {{ experiment.name }}
-            </option>
+          <option value="">Select an experiment</option>
+          <option *ngFor="let experiment of experiments" [value]="experiment.name">
+            {{ experiment.name }}
+          </option>
           </select>
-          
         </div>
-      
+        
         <form (submit)="onUploadFormSubmit($event)">
           <div class="slides-section">
             <div class="file-upload-container">
@@ -22,10 +21,9 @@
               <!-- Additional elements for handling the uploaded file -->
             </div>
           </div>
-          <button type="submit">Upload</button>
+        <button type="submit">Upload</button>
         </form>
     </div>
-    
   </div>
       
   
